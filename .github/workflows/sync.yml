@@ -1,0 +1,90 @@
+name: sync
+
+on:
+  schedule:
+    - cron: '30 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Configure git
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config --global core.autocrlf false
+      - name: Install Wayland libraries
+        run: sudo apt-get install -y libwayland-server0 libwayland-client0 wayland-utils
+      - name: Sync upstream protocols
+        id: sync
+        run: |
+          go run ./cmd/wlbsync -notes "$RUNNER_TEMP/notes.md"
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "up to date"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Generate
+        if: steps.sync.outputs.changed == 'true'
+        run: go generate ./...
+      - name: Vet
+        if: steps.sync.outputs.changed == 'true'
+        run: go vet ./...
+      - name: Test (CGO disabled)
+        if: steps.sync.outputs.changed == 'true'
+        run: CGO_ENABLED=0 go test ./...
+      - name: Test (race)
+        if: steps.sync.outputs.changed == 'true'
+        run: go test -race ./...
+      - name: Compute next version
+        id: version
+        if: steps.sync.outputs.changed == 'true'
+        run: |
+          latest="$(git tag -l 'v0.*' --sort=-v:refname | grep -E '^v0\.[0-9]+\.[0-9]+$' | sed -n 1p || true)"
+          if [ -z "$latest" ]; then
+            tag="v0.1.0"
+          else
+            minor="${latest#v0.}"
+            minor="${minor%%.*}"
+            tag="v0.$((minor + 1)).0"
+          fi
+          echo "latest tag: ${latest:-none}; next tag: $tag"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+      - name: Commit via GitHub API
+        id: commit
+        if: steps.sync.outputs.changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          message="$(printf 'feat(spec): sync upstream protocols\n\n'; head -n 20 "$RUNNER_TEMP/notes.md")"
+          sha="$(go run ./cmd/wlbcommit -repo "$GITHUB_REPOSITORY" -branch main -message "$message")"
+          echo "commit: $sha"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+      - name: Create release
+        if: steps.sync.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+          SHA: ${{ steps.commit.outputs.sha }}
+        run: |
+          gh release create "$TAG" --target "$SHA" --title "$TAG" --notes-file "$RUNNER_TEMP/notes.md"
+      - name: Warm Go module proxy
+        if: steps.sync.outputs.changed == 'true'
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          curl -fsS "https://proxy.golang.org/github.com/bnema/go-wayland-bindings/@v/$TAG.info" || true
