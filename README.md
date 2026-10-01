@@ -99,10 +99,11 @@ go run ./cmd/wlbsync -notes notes.md
 
 ## Releases
 
-A scheduled workflow syncs upstream every day. When anything changed it
+A scheduled workflow syncs upstream every day. When protocol XML changed it
 regenerates the bindings, runs the checks and publishes a new minor version
 `v0.X.0` whose release notes list added and removed packages, interface
-version bumps and breaking changes. A failed run publishes nothing.
+version bumps and breaking changes. A moved upstream ref with identical XML
+publishes nothing, and neither does a failed run.
 
 ## Tests
 
