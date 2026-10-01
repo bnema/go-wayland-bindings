@@ -130,13 +130,42 @@ func diffProtocol(n *notes, pkg string, old, cur *spec.Protocol) {
 		}
 		if o.Version != it.Version {
 			n.bumps = append(n.bumps, fmt.Sprintf("%s: %s v%d → v%d", pkg, it.Name, o.Version, it.Version))
+			if it.Version < o.Version {
+				n.breaking = append(n.breaking, fmt.Sprintf("%s: interface %s version decreased v%d → v%d", pkg, it.Name, o.Version, it.Version))
+			}
 		}
+		diffEnums(n, pkg, it.Name, o.Enums, it.Enums)
 		diffMessages(n, pkg, it.Name, "request", o.Requests, it.Requests)
 		diffMessages(n, pkg, it.Name, "event", o.Events, it.Events)
 	}
 	for _, it := range old.Interfaces {
 		if !seen[it.Name] {
 			n.breaking = append(n.breaking, fmt.Sprintf("%s: interface %s removed", pkg, it.Name))
+		}
+	}
+}
+
+// diffEnums reports removed enums and removed or renamed enum entries.
+// Entries are matched by name, so a rename shows up as a removal.
+func diffEnums(n *notes, pkg, iface string, old, cur []spec.Enum) {
+	curByName := map[string]spec.Enum{}
+	for _, e := range cur {
+		curByName[e.Name] = e
+	}
+	for _, o := range old {
+		e, ok := curByName[o.Name]
+		if !ok {
+			n.breaking = append(n.breaking, fmt.Sprintf("%s: %s enum %s removed", pkg, iface, o.Name))
+			continue
+		}
+		entries := map[string]bool{}
+		for _, en := range e.Entries {
+			entries[en.Name] = true
+		}
+		for _, en := range o.Entries {
+			if !entries[en.Name] {
+				n.breaking = append(n.breaking, fmt.Sprintf("%s: %s enum %s entry %s removed or renamed", pkg, iface, o.Name, en.Name))
+			}
 		}
 	}
 }
@@ -152,14 +181,18 @@ func diffMessages(n *notes, pkg, iface, kind string, old, cur []spec.Message) {
 			n.breaking = append(n.breaking, fmt.Sprintf("%s: %s %s %s removed", pkg, iface, kind, o.Name))
 			continue
 		}
+		if (o.Type == "destructor") != (m.Type == "destructor") {
+			n.breaking = append(n.breaking, fmt.Sprintf("%s: %s %s %s destructor flag changed: %t → %t",
+				pkg, iface, kind, o.Name, o.Type == "destructor", m.Type == "destructor"))
+		}
 		if change := argsChange(o.Args, m.Args); change != "" {
 			n.breaking = append(n.breaking, fmt.Sprintf("%s: %s %s %s arguments changed: %s", pkg, iface, kind, o.Name, change))
 		}
 	}
 }
 
-// argsChange describes the first difference between two argument lists,
-// comparing name, type and interface by position. It returns "" when equal.
+// argsChange describes the differences between two argument lists, comparing
+// name, type, interface, enum and allow-null by position. It returns "" when equal.
 func argsChange(old, cur []spec.Arg) string {
 	if len(old) != len(cur) {
 		return fmt.Sprintf("%d → %d arguments", len(old), len(cur))
@@ -167,7 +200,8 @@ func argsChange(old, cur []spec.Arg) string {
 	var diffs []string
 	for i := range old {
 		o, c := old[i], cur[i]
-		if o.Name != c.Name || o.Type != c.Type || o.Interface != c.Interface {
+		if o.Name != c.Name || o.Type != c.Type || o.Interface != c.Interface ||
+			o.Enum != c.Enum || o.AllowNull != c.AllowNull {
 			diffs = append(diffs, fmt.Sprintf("#%d %s → %s", i+1, argString(o), argString(c)))
 		}
 	}
@@ -178,6 +212,12 @@ func argString(a spec.Arg) string {
 	s := a.Name + ":" + a.Type
 	if a.Interface != "" {
 		s += "<" + a.Interface + ">"
+	}
+	if a.Enum != "" {
+		s += " enum=" + a.Enum
+	}
+	if a.AllowNull {
+		s += " allow-null"
 	}
 	return s
 }

@@ -49,14 +49,11 @@ var (
 	tagVThreePart = regexp.MustCompile(`^v\d+\.\d+\.\d+$`)
 )
 
-// waylandTagOK accepts release tags: even minor, or patch below 90 (patch
-// 90 and above are release candidates).
+// waylandTagOK accepts release tags X.Y.Z only; patch 90 and above are
+// release candidates regardless of the minor version.
 func waylandTagOK(tag string) bool {
 	v := versionParts(tag)
-	if len(v) != 3 {
-		return false
-	}
-	return v[1]%2 == 0 || v[2] < 90
+	return len(v) == 3 && v[2] < 90
 }
 
 // exactly matches only the listed repository paths, all with stability s.

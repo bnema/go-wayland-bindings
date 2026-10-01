@@ -93,7 +93,10 @@ func run(o options, srcs []upstream, f Fetcher, stdout io.Writer) error {
 	if err != nil {
 		return err
 	}
-	changed := cur.differs(t, manifest)
+	changed, err := cur.differs(t)
+	if err != nil {
+		return err
+	}
 
 	if o.notes != "" {
 		n, err := diff(cur, curParsed, t)

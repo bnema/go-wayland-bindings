@@ -89,6 +89,9 @@ func checkoutAndScan(src upstream, ref, commit string, f Fetcher) ([]candidate, 
 			}
 			return nil
 		}
+		if !d.Type().IsRegular() {
+			return nil // symlinks and other special files are never vendored
+		}
 		rel, err := filepath.Rel(dir, p)
 		if err != nil {
 			return err
@@ -252,17 +255,39 @@ func readState(root string) (*state, error) {
 	return s, nil
 }
 
-// differs reports whether writing t would change anything on disk.
-func (s *state) differs(t *tree, manifest []byte) bool {
-	if !bytes.Equal(s.raw, manifest) || len(s.xml) != len(t.xml) {
-		return true
+// differs reports whether t carries a real content change relative to disk:
+// different XML bytes or different protocol entries. A move of a source ref
+// or commit that leaves every selected XML byte-identical (and the set of
+// packages unchanged) is not a change, so nothing is rewritten and no release
+// is cut for it.
+func (s *state) differs(t *tree) (bool, error) {
+	if len(s.xml) != len(t.xml) {
+		return true, nil
+	}
+	// A different set of upstream repositories is a change.
+	if len(s.manifest.Sources) != len(t.manifest.Sources) {
+		return true, nil
+	}
+	for i, o := range s.manifest.Sources {
+		if n := t.manifest.Sources[i]; o.ID != n.ID || o.URL != n.URL {
+			return true, nil
+		}
+	}
+	// Compare manifests with the current source records substituted in.
+	probe := &spec.Manifest{Sources: s.manifest.Sources, Protocols: t.manifest.Protocols}
+	b, err := probe.Marshal()
+	if err != nil {
+		return false, err
+	}
+	if !bytes.Equal(s.raw, b) {
+		return true, nil
 	}
 	for name, b := range t.xml {
 		if old, ok := s.xml[name]; !ok || !bytes.Equal(old, b) {
-			return true
+			return true, nil
 		}
 	}
-	return false
+	return false, nil
 }
 
 // write stores t under root/spec and removes stale XML files.

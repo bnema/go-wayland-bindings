@@ -6,85 +6,161 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: sync
   cancel-in-progress: false
 
 jobs:
-  sync:
+  # prepare runs all third-party code (go modules, staticcheck, tests) with a
+  # read-only token and hands the result over as a patch.
+  prepare:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      changed: ${{ steps.sync.outputs.changed }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          fetch-depth: 0
-      - uses: actions/setup-go@v5
+          persist-credentials: false
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version-file: go.mod
-      - name: Configure git
-        run: |
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          git config --global core.autocrlf false
       - name: Install Wayland libraries
-        run: sudo apt-get install -y libwayland-server0 libwayland-client0 wayland-utils
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libwayland-server0 libwayland-client0 wayland-utils
       - name: Sync upstream protocols
         id: sync
         run: |
-          go run ./cmd/wlbsync -notes "$RUNNER_TEMP/notes.md"
-          if [ -z "$(git status --porcelain)" ]; then
-            echo "up to date"
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          fi
+          mkdir -p "$RUNNER_TEMP/out"
+          result="$(go run ./cmd/wlbsync -notes "$RUNNER_TEMP/out/notes.md")"
+          echo "$result"
+          printf '%s\n' "$result" | grep -E '^changed=(true|false)$' >> "$GITHUB_OUTPUT"
       - name: Generate
         if: steps.sync.outputs.changed == 'true'
         run: go generate ./...
       - name: Vet
         if: steps.sync.outputs.changed == 'true'
         run: go vet ./...
+      - name: Staticcheck
+        if: steps.sync.outputs.changed == 'true'
+        run: go run honnef.co/go/tools/cmd/staticcheck@2026.2.1 ./...
       - name: Test (CGO disabled)
         if: steps.sync.outputs.changed == 'true'
         run: CGO_ENABLED=0 go test ./...
       - name: Test (race)
         if: steps.sync.outputs.changed == 'true'
         run: go test -race ./...
-      - name: Compute next version
-        id: version
-        if: steps.sync.outputs.changed == 'true'
+      - name: Create patch
+        env:
+          CHANGED: ${{ steps.sync.outputs.changed }}
         run: |
+          : > "$RUNNER_TEMP/out/changes.patch"
+          if [ "$CHANGED" = 'true' ]; then
+            git add -A
+            git diff --cached --binary > "$RUNNER_TEMP/out/changes.patch"
+            test -s "$RUNNER_TEMP/out/changes.patch"
+          fi
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sync
+          path: ${{ runner.temp }}/out
+          if-no-files-found: error
+          retention-days: 1
+
+  # publish has write access and runs no third-party code: it applies the
+  # patch, commits through the API and cuts the release.
+  publish:
+    needs: prepare
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version-file: go.mod
+          cache: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: sync
+          path: ${{ runner.temp }}/sync
+      - name: Apply patch
+        if: needs.prepare.outputs.changed == 'true'
+        run: |
+          test -s "$RUNNER_TEMP/sync/changes.patch"
+          git apply --index "$RUNNER_TEMP/sync/changes.patch"
+      - name: Commit via GitHub API
+        id: commit
+        if: needs.prepare.outputs.changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          message="$(printf 'feat(spec): sync upstream protocols\n\n'; head -n 20 "$RUNNER_TEMP/sync/notes.md")"
+          sha="$(go run ./cmd/wlbcommit -repo "$GITHUB_REPOSITORY" -branch main -message "$message")"
+          echo "commit: $sha"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+      - name: Release
+        id: release
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMITTED_SHA: ${{ steps.commit.outputs.sha }}
+        run: |
+          set -euo pipefail
+          if [ -n "$COMMITTED_SHA" ]; then
+            target="$COMMITTED_SHA"
+            auth="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+            GIT_CONFIG_COUNT=1 \
+              GIT_CONFIG_KEY_0="http.https://github.com/.extraheader" \
+              GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $auth" \
+              git fetch --no-tags origin main
+            git cat-file -e "$target^{commit}"
+          else
+            target="$(git rev-parse HEAD)"
+          fi
+          echo "release target: $target"
+
+          # Already released?
+          if git tag --points-at "$target" | grep -qE '^v0\.[0-9]+\.[0-9]+$'; then
+            echo "$target is already tagged; nothing to release"
+            exit 0
+          fi
+
           latest="$(git tag -l 'v0.*' --sort=-v:refname | grep -E '^v0\.[0-9]+\.[0-9]+$' | sed -n 1p || true)"
           if [ -z "$latest" ]; then
-            tag="v0.1.0"
+            # The first release is a maintainer-signed tag; automation only
+            # continues an existing v0 series.
+            echo "no v0 tag yet; create the first release manually"
+            exit 0
           else
+            rc=0
+            git diff --quiet "$latest" "$target" -- spec/xml client server || rc=$?
+            case "$rc" in
+              0) echo "no changes in spec/xml, client, server since $latest; nothing to release"; exit 0 ;;
+              1) ;;
+              *) echo "git diff failed ($rc)" >&2; exit "$rc" ;;
+            esac
             minor="${latest#v0.}"
             minor="${minor%%.*}"
             tag="v0.$((minor + 1)).0"
           fi
           echo "latest tag: ${latest:-none}; next tag: $tag"
+
+          if [ -n "$COMMITTED_SHA" ]; then
+            gh release create "$tag" --target "$target" --title "$tag" --notes-file "$RUNNER_TEMP/sync/notes.md"
+          else
+            gh release create "$tag" --target "$target" --title "$tag" --generate-notes
+          fi
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
-      - name: Commit via GitHub API
-        id: commit
-        if: steps.sync.outputs.changed == 'true'
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          message="$(printf 'feat(spec): sync upstream protocols\n\n'; head -n 20 "$RUNNER_TEMP/notes.md")"
-          sha="$(go run ./cmd/wlbcommit -repo "$GITHUB_REPOSITORY" -branch main -message "$message")"
-          echo "commit: $sha"
-          echo "sha=$sha" >> "$GITHUB_OUTPUT"
-      - name: Create release
-        if: steps.sync.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ steps.version.outputs.tag }}
-          SHA: ${{ steps.commit.outputs.sha }}
-        run: |
-          gh release create "$TAG" --target "$SHA" --title "$TAG" --notes-file "$RUNNER_TEMP/notes.md"
       - name: Warm Go module proxy
-        if: steps.sync.outputs.changed == 'true'
+        if: steps.release.outputs.tag != ''
         env:
-          TAG: ${{ steps.version.outputs.tag }}
+          TAG: ${{ steps.release.outputs.tag }}
         run: |
           curl -fsS "https://proxy.golang.org/github.com/bnema/go-wayland-bindings/@v/$TAG.info" || true

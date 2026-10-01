@@ -200,6 +200,9 @@ func collectChanges(root, status string) (fileChanges, error) {
 			}
 			return fileChanges{}, err
 		}
+		if info.Mode()&os.ModeSymlink != 0 {
+			return fileChanges{}, fmt.Errorf("%s is a symbolic link, which cannot be committed through the API", p)
+		}
 		if info.IsDir() {
 			continue // e.g. a submodule; not representable
 		}
@@ -211,11 +214,6 @@ func collectChanges(root, status string) (fileChanges, error) {
 		changes.Additions = append(changes.Additions, addition{Path: p, Contents: base64.StdEncoding.EncodeToString(data)})
 	}
 	for _, p := range sortedKeys(dels) {
-		if adds[p] {
-			if _, err := os.Lstat(filepath.Join(root, filepath.FromSlash(p))); err == nil {
-				continue
-			}
-		}
 		changes.Deletions = append(changes.Deletions, deletion{Path: p})
 	}
 	return changes, nil

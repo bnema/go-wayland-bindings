@@ -4,15 +4,31 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"testing"
 )
+
+// isolateGit makes git invocations hermetic: inherited GIT_* variables are
+// dropped and no user or system configuration is read.
+func isolateGit(t *testing.T) {
+	t.Helper()
+	if _, err := exec.LookPath("git"); err != nil {
+		t.Skip("git not installed")
+	}
+	for _, kv := range os.Environ() {
+		if k, _, _ := strings.Cut(kv, "="); strings.HasPrefix(k, "GIT_") {
+			t.Setenv(k, "") // registers restoration of the original value
+			os.Unsetenv(k)
+		}
+	}
+	t.Setenv("GIT_CONFIG_GLOBAL", "/dev/null")
+	t.Setenv("GIT_CONFIG_NOSYSTEM", "1")
+}
 
 // TestGitFetcherLocal exercises the real git implementation against a local
 // repository; no network is involved.
 func TestGitFetcherLocal(t *testing.T) {
-	if _, err := exec.LookPath("git"); err != nil {
-		t.Skip("git not installed")
-	}
+	isolateGit(t)
 	repo := t.TempDir()
 	run := func(args ...string) string {
 		t.Helper()
@@ -41,9 +57,11 @@ func TestGitFetcherLocal(t *testing.T) {
 	write("two")
 	run("commit", "-q", "-am", "two")
 	second := run("rev-parse", "HEAD")
-	run("tag", "1.2.0") // lightweight
-	run("tag", "1.3.1") // odd minor, patch < 90: accepted
-	run("tag", "1.5.90")
+	run("tag", "1.2.0")  // lightweight
+	run("tag", "1.3.1")  // odd minor, patch < 90: accepted
+	run("tag", "1.5.90") // release candidate: rejected
+	run("tag", "1.4.91") // release candidate on an even minor: rejected
+	run("tag", "1.26.91")
 	run("tag", "not-a-version")
 
 	src := upstream{

@@ -408,6 +408,102 @@ func TestBreakingMessageChanges(t *testing.T) {
 	}
 }
 
+func TestSourceMoveOnlyIsNotAChange(t *testing.T) {
+	root := t.TempDir()
+	f := baseFetcher()
+	mustSync(t, root, f, options{})
+	before := snapshot(t, root)
+
+	// New tags, byte-identical XML.
+	f.trees["wayland"]["1.0.1"] = f.trees["wayland"]["1.0.0"]
+	f.trees["wayland-protocols"]["1.1"] = f.trees["wayland-protocols"]["1.0"]
+	f.latest["wayland"] = "1.0.1"
+	f.latest["wayland-protocols"] = "1.1"
+
+	for _, o := range []options{{}, {check: true}} {
+		if got := mustSync(t, root, f, o); got != "changed=false" {
+			t.Errorf("options %+v: output %q, want changed=false", o, got)
+		}
+		if !reflect.DeepEqual(before, snapshot(t, root)) {
+			t.Errorf("options %+v: spec/ was rewritten", o)
+		}
+	}
+
+	// A real XML change afterwards rewrites the manifest with the new refs.
+	f.trees["wayland"]["1.0.2"] = map[string]string{
+		"protocol/wayland.xml": xmlDoc("wayland", true, "wl_surface:7", "wl_seat:9"),
+	}
+	f.latest["wayland"] = "1.0.2"
+	if got := mustSync(t, root, f, options{}); got != "changed=true" {
+		t.Fatalf("output %q", got)
+	}
+	m := loadRoot(t, root)
+	for _, s := range m.Sources {
+		if s.ID == "wayland-protocols" && s.Ref != "1.1" {
+			t.Errorf("wayland-protocols ref = %s, want 1.1", s.Ref)
+		}
+	}
+}
+
+func TestBreakingEnumsAndAttributes(t *testing.T) {
+	enum := func(name string, entries ...string) spec.Enum {
+		e := spec.Enum{Name: name}
+		for _, en := range entries {
+			e.Entries = append(e.Entries, spec.Entry{Name: en})
+		}
+		return e
+	}
+	iface := func(version int, enums []spec.Enum, reqs ...spec.Message) *spec.Protocol {
+		return &spec.Protocol{Interfaces: []spec.Interface{{Name: "a", Version: version, Enums: enums, Requests: reqs}}}
+	}
+	msg := func(typ string, args ...spec.Arg) spec.Message {
+		return spec.Message{Name: "m", Type: typ, Args: args}
+	}
+	cases := []struct {
+		name     string
+		old, cur *spec.Protocol
+		want     string // substring of the single breaking entry; "" means none
+	}{
+		{"enum removed", iface(1, []spec.Enum{enum("e", "x")}), iface(1, nil), "enum e removed"},
+		{"entry removed", iface(1, []spec.Enum{enum("e", "x", "y")}), iface(1, []spec.Enum{enum("e", "x")}), "enum e entry y removed or renamed"},
+		{"entry renamed", iface(1, []spec.Enum{enum("e", "x")}), iface(1, []spec.Enum{enum("e", "z")}), "enum e entry x removed or renamed"},
+		{"entry added", iface(1, []spec.Enum{enum("e", "x")}), iface(1, []spec.Enum{enum("e", "x", "y")}), ""},
+		{"enum added", iface(1, nil), iface(1, []spec.Enum{enum("e", "x")}), ""},
+		{"version decreased", iface(3, nil), iface(2, nil), "interface a version decreased v3 → v2"},
+		{"version increased", iface(2, nil), iface(3, nil), ""},
+		{"destructor added", iface(1, nil, msg("")), iface(1, nil, msg("destructor")), "request m destructor flag changed: false → true"},
+		{"destructor removed", iface(1, nil, msg("destructor")), iface(1, nil, msg("")), "request m destructor flag changed: true → false"},
+		{"enum attr changed",
+			iface(1, nil, msg("", spec.Arg{Name: "x", Type: "uint", Enum: "e"})),
+			iface(1, nil, msg("", spec.Arg{Name: "x", Type: "uint", Enum: "f"})),
+			"#1 x:uint enum=e → x:uint enum=f"},
+		{"enum attr dropped",
+			iface(1, nil, msg("", spec.Arg{Name: "x", Type: "uint", Enum: "e"})),
+			iface(1, nil, msg("", spec.Arg{Name: "x", Type: "uint"})),
+			"arguments changed"},
+		{"allow-null changed",
+			iface(1, nil, msg("", spec.Arg{Name: "x", Type: "object", Interface: "b"})),
+			iface(1, nil, msg("", spec.Arg{Name: "x", Type: "object", Interface: "b", AllowNull: true})),
+			"#1 x:object<b> → x:object<b> allow-null"},
+		{"identical",
+			iface(1, []spec.Enum{enum("e", "x")}, msg("destructor", spec.Arg{Name: "x", Type: "uint", Enum: "e", AllowNull: true})),
+			iface(1, []spec.Enum{enum("e", "x")}, msg("destructor", spec.Arg{Name: "x", Type: "uint", Enum: "e", AllowNull: true})),
+			""},
+	}
+	for _, c := range cases {
+		t.Run(c.name, func(t *testing.T) {
+			n := &notes{}
+			diffProtocol(n, "p", c.old, c.cur)
+			switch {
+			case c.want == "" && len(n.breaking) != 0:
+				t.Errorf("unexpected breaking: %v", n.breaking)
+			case c.want != "" && (len(n.breaking) != 1 || !strings.Contains(n.breaking[0], c.want)):
+				t.Errorf("breaking = %v, want one containing %q", n.breaking, c.want)
+			}
+		})
+	}
+}
+
 func TestBreakingEventAndRename(t *testing.T) {
 	old := &spec.Protocol{Interfaces: []spec.Interface{{
 		Name:   "a",
@@ -426,6 +522,32 @@ func TestBreakingEventAndRename(t *testing.T) {
 	diffProtocol(n, "p", cur, old)
 	if len(n.breaking) != 2 || !strings.Contains(n.breaking[1], "event f removed") {
 		t.Errorf("breaking = %v", n.breaking)
+	}
+}
+
+// symlinkFetcher checks out a repository whose vendored path is a symlink.
+type symlinkFetcher struct{ target string }
+
+func (f symlinkFetcher) Resolve(upstream, string) (string, string, error) { return "", "", nil }
+
+func (f symlinkFetcher) Checkout(_ upstream, _, _, dir string) error {
+	if err := os.MkdirAll(filepath.Join(dir, "protocol"), 0o755); err != nil {
+		return err
+	}
+	return os.Symlink(f.target, filepath.Join(dir, "protocol", "wayland.xml"))
+}
+
+func TestScanSkipsNonRegularFiles(t *testing.T) {
+	secret := filepath.Join(t.TempDir(), "secret.xml")
+	if err := os.WriteFile(secret, []byte("secret"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	found, err := checkoutAndScan(testSources()[0], "1.0.0", "c", symlinkFetcher{target: secret})
+	if err != nil {
+		t.Skipf("symlinks unsupported: %v", err)
+	}
+	if len(found) != 0 {
+		t.Errorf("symlink was scanned: %+v", found)
 	}
 }
 
@@ -714,14 +836,22 @@ func TestTagSelection(t *testing.T) {
 			plasma = s
 		}
 	}
-	// Even minor or patch<90: 1.10.90 allowed (even minor), 1.11.91 and 1.9.95 are not,
-	// 1.11.1 is. Numeric compare: 1.10.90 > 1.11.1? No: 1.11.1 > 1.10.90.
+	// Only X.Y.Z with Z < 90: 1.10.90, 1.11.91 and 1.9.95 are release
+	// candidates; 1.11.1 is accepted.
 	if got, err := latestTag(wayland, tags); err != nil || got != "1.11.1" {
 		t.Errorf("wayland latest = %q, %v", got, err)
 	}
 	delete(tags, "1.11.1")
-	if got, _ := latestTag(wayland, tags); got != "1.10.90" {
+	if got, _ := latestTag(wayland, tags); got != "1.10.0" {
 		t.Errorf("wayland latest = %q", got)
+	}
+	for tag, want := range map[string]bool{
+		"1.26.0": true, "1.3.89": true, "1.26.90": false, "1.26.91": false, "1.4.91": false,
+		"1.4": false, "1.4.0.1": false, "1.4.x": false,
+	} {
+		if got := waylandTagOK(tag); got != want {
+			t.Errorf("waylandTagOK(%q) = %v, want %v", tag, got, want)
+		}
 	}
 
 	if got, err := latestTag(protocols, map[string]string{"1.9": "a", "1.10": "b", "1.49": "c", "1.49.1": "d", "v1.50": "e"}); err != nil || got != "1.49" {

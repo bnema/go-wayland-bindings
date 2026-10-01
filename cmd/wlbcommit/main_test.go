@@ -8,15 +8,33 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
 )
 
+// isolateGit makes git invocations hermetic: inherited GIT_* variables are
+// dropped and no user or system configuration is read.
+func isolateGit(t *testing.T) {
+	t.Helper()
+	if _, err := exec.LookPath("git"); err != nil {
+		t.Skip("git not installed")
+	}
+	for _, kv := range os.Environ() {
+		if k, _, _ := strings.Cut(kv, "="); strings.HasPrefix(k, "GIT_") {
+			t.Setenv(k, "") // registers restoration of the original value
+			os.Unsetenv(k)
+		}
+	}
+	t.Setenv("GIT_CONFIG_GLOBAL", "/dev/null")
+	t.Setenv("GIT_CONFIG_NOSYSTEM", "1")
+}
+
 func gitT(t *testing.T, dir string, args ...string) string {
 	t.Helper()
 	full := append([]string{
-		"-c", "commit.gpgsign=false",
+		"-c", "commit.gpgsign=false", "-c", "tag.gpgsign=false",
 		"-c", "user.name=test", "-c", "user.email=test@example.com",
 	}, args...)
 	out, err := git(context.Background(), dir, full...)
@@ -39,6 +57,7 @@ func writeFile(t *testing.T, dir, name, content string) {
 
 func newRepo(t *testing.T) (dir, head string) {
 	t.Helper()
+	isolateGit(t)
 	dir = t.TempDir()
 	gitT(t, dir, "init", "-q")
 	writeFile(t, dir, "keep.txt", "keep\n")
@@ -193,6 +212,22 @@ func TestRunErrors(t *testing.T) {
 		}
 		if called {
 			t.Error("API called despite no changes")
+		}
+	})
+	t.Run("symlink", func(t *testing.T) {
+		dir, _ := newRepo(t)
+		if err := os.Symlink("keep.txt", filepath.Join(dir, "link")); err != nil {
+			t.Skipf("symlinks unsupported: %v", err)
+		}
+		called := false
+		srv := httptest.NewServer(http.HandlerFunc(func(http.ResponseWriter, *http.Request) { called = true }))
+		defer srv.Close()
+		err := run(context.Background(), base(srv.URL), ok, &bytes.Buffer{}, dir)
+		if err == nil || !strings.Contains(err.Error(), "symbolic link") {
+			t.Errorf("err = %v", err)
+		}
+		if called {
+			t.Error("API called despite symlink")
 		}
 	})
 	t.Run("non-200", func(t *testing.T) {
