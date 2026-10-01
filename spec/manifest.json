@@ -1,4 +1,1616 @@
 {
-  "sources": [],
-  "protocols": []
+  "sources": [
+    {
+      "id": "plasma-wayland-protocols",
+      "url": "https://invent.kde.org/libraries/plasma-wayland-protocols.git",
+      "ref": "v1.23.0",
+      "commit": "c5ac4db818f4a575a6ccfe0065b73ecfaba6e93e"
+    },
+    {
+      "id": "wayland",
+      "url": "https://gitlab.freedesktop.org/wayland/wayland.git",
+      "ref": "1.26.0",
+      "commit": "87cc8a8728a923fc57938faa81ba0e74f34ecdc7"
+    },
+    {
+      "id": "wayland-protocols",
+      "url": "https://gitlab.freedesktop.org/wayland/wayland-protocols.git",
+      "ref": "1.49",
+      "commit": "ee78491a237eaff9389a0ccf8680521d074407d3"
+    },
+    {
+      "id": "wlr-protocols",
+      "url": "https://gitlab.freedesktop.org/wlroots/wlr-protocols.git",
+      "ref": "master",
+      "commit": "bf4fc79abc359eea5a0edec0ac6d4a2b2955f82a"
+    },
+    {
+      "id": "wlroots",
+      "url": "https://gitlab.freedesktop.org/wlroots/wlroots.git",
+      "ref": "0.20.2",
+      "commit": "d783533489e1f75d6886c2ab5c5960090ef268f8"
+    }
+  ],
+  "protocols": [
+    {
+      "package": "alphamodifier",
+      "xml": "alphamodifier.xml",
+      "source": "wayland-protocols",
+      "path": "staging/alpha-modifier/alpha-modifier-v1.xml",
+      "sha256": "f0b4a43b9e48783fafdb46319fa72b34a41afd932f8613d7cadaf7203f2ffa35",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_alpha_modifier_surface_v1",
+          "version": 1
+        },
+        {
+          "name": "wp_alpha_modifier_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "colormanagement",
+      "xml": "colormanagement.xml",
+      "source": "wayland-protocols",
+      "path": "staging/color-management/color-management-v1.xml",
+      "sha256": "18a2678e3352c3be3fbeed20005d48852b7235d0d78f08b9c987a0b8e91449f9",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_color_management_output_v1",
+          "version": 3
+        },
+        {
+          "name": "wp_color_management_surface_feedback_v1",
+          "version": 3
+        },
+        {
+          "name": "wp_color_management_surface_v1",
+          "version": 3
+        },
+        {
+          "name": "wp_color_manager_v1",
+          "version": 3
+        },
+        {
+          "name": "wp_image_description_creator_icc_v1",
+          "version": 3
+        },
+        {
+          "name": "wp_image_description_creator_params_v1",
+          "version": 3
+        },
+        {
+          "name": "wp_image_description_info_v1",
+          "version": 3
+        },
+        {
+          "name": "wp_image_description_reference_v1",
+          "version": 1
+        },
+        {
+          "name": "wp_image_description_v1",
+          "version": 3
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "colorrepresentation",
+      "xml": "colorrepresentation.xml",
+      "source": "wayland-protocols",
+      "path": "staging/color-representation/color-representation-v1.xml",
+      "sha256": "b824688e0e5c1d01e12afe1d3f82503092ec7599affcd6471fda6d296d4f7e3b",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_color_representation_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "wp_color_representation_surface_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "committiming",
+      "xml": "committiming.xml",
+      "source": "wayland-protocols",
+      "path": "staging/commit-timing/commit-timing-v1.xml",
+      "sha256": "ff3fcf31d13d44bad756a50fda663a43008bacbbd2bf8cba3a1bf5ffe7f54172",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_commit_timer_v1",
+          "version": 1
+        },
+        {
+          "name": "wp_commit_timing_manager_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "contenttype",
+      "xml": "contenttype.xml",
+      "source": "wayland-protocols",
+      "path": "staging/content-type/content-type-v1.xml",
+      "sha256": "203d17a26baa2ab4a8c2c9cb737c953fa3263c73a0a8aa6e552a41b3eac2196d",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_content_type_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "wp_content_type_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "cursorshape",
+      "xml": "cursorshape.xml",
+      "source": "wayland-protocols",
+      "path": "staging/cursor-shape/cursor-shape-v1.xml",
+      "sha256": "bb57d91e53a79dadab7c612dab87c233393cee73673feefa7442cfbfdd9aed2f",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_cursor_shape_device_v1",
+          "version": 2
+        },
+        {
+          "name": "wp_cursor_shape_manager_v1",
+          "version": 2
+        }
+      ],
+      "deps": [
+        "tablet",
+        "wayland"
+      ]
+    },
+    {
+      "package": "drmlease",
+      "xml": "drmlease.xml",
+      "source": "wayland-protocols",
+      "path": "staging/drm-lease/drm-lease-v1.xml",
+      "sha256": "18f325e92285473eca0567ea1038abb16849b8638b36e458ff551f3ca68ef80c",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_drm_lease_connector_v1",
+          "version": 1
+        },
+        {
+          "name": "wp_drm_lease_device_v1",
+          "version": 1
+        },
+        {
+          "name": "wp_drm_lease_request_v1",
+          "version": 1
+        },
+        {
+          "name": "wp_drm_lease_v1",
+          "version": 1
+        }
+      ],
+      "deps": []
+    },
+    {
+      "package": "extbackgroundeffect",
+      "xml": "extbackgroundeffect.xml",
+      "source": "wayland-protocols",
+      "path": "staging/ext-background-effect/ext-background-effect-v1.xml",
+      "sha256": "e463b7863c97d7be05489b52b15cd0b3a5d8290b51340f62023b47d03b4217e3",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "ext_background_effect_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "ext_background_effect_surface_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "extdatacontrol",
+      "xml": "extdatacontrol.xml",
+      "source": "wayland-protocols",
+      "path": "staging/ext-data-control/ext-data-control-v1.xml",
+      "sha256": "293deba5dfdb974fbcf8dcf891a30a51a36a8bba0047dc6bdf6a03194089b7fb",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "ext_data_control_device_v1",
+          "version": 1
+        },
+        {
+          "name": "ext_data_control_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "ext_data_control_offer_v1",
+          "version": 1
+        },
+        {
+          "name": "ext_data_control_source_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "extforeigntoplevellist",
+      "xml": "extforeigntoplevellist.xml",
+      "source": "wayland-protocols",
+      "path": "staging/ext-foreign-toplevel-list/ext-foreign-toplevel-list-v1.xml",
+      "sha256": "6b2ffb3a07d679d1c4170263adfefb9a7c37dd34ed3db5180bf58cb8ff8fbd0b",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "ext_foreign_toplevel_handle_v1",
+          "version": 1
+        },
+        {
+          "name": "ext_foreign_toplevel_list_v1",
+          "version": 1
+        }
+      ],
+      "deps": []
+    },
+    {
+      "package": "extidlenotify",
+      "xml": "extidlenotify.xml",
+      "source": "wayland-protocols",
+      "path": "staging/ext-idle-notify/ext-idle-notify-v1.xml",
+      "sha256": "e56a9c22684e6b46655f7221b798328e304c1efc8f63f01241a1cf8c070f4c30",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "ext_idle_notification_v1",
+          "version": 2
+        },
+        {
+          "name": "ext_idle_notifier_v1",
+          "version": 2
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "extimagecapturesource",
+      "xml": "extimagecapturesource.xml",
+      "source": "wayland-protocols",
+      "path": "staging/ext-image-capture-source/ext-image-capture-source-v1.xml",
+      "sha256": "4ef41d15e4cdb9f550158391358ceec724a6708b43b7efedec03121a6bb8458d",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "ext_foreign_toplevel_image_capture_source_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "ext_image_capture_source_v1",
+          "version": 1
+        },
+        {
+          "name": "ext_output_image_capture_source_manager_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "extforeigntoplevellist",
+        "wayland"
+      ]
+    },
+    {
+      "package": "extimagecopycapture",
+      "xml": "extimagecopycapture.xml",
+      "source": "wayland-protocols",
+      "path": "staging/ext-image-copy-capture/ext-image-copy-capture-v1.xml",
+      "sha256": "41a446653f788fabb404cab3168c0bd667c1ff4b54f1f0bb1e18810a1f47d73f",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "ext_image_copy_capture_cursor_session_v1",
+          "version": 1
+        },
+        {
+          "name": "ext_image_copy_capture_frame_v1",
+          "version": 1
+        },
+        {
+          "name": "ext_image_copy_capture_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "ext_image_copy_capture_session_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "extimagecapturesource",
+        "wayland"
+      ]
+    },
+    {
+      "package": "extsessionlock",
+      "xml": "extsessionlock.xml",
+      "source": "wayland-protocols",
+      "path": "staging/ext-session-lock/ext-session-lock-v1.xml",
+      "sha256": "a05df7d95c5e523e457037b3a149484e8064828cda66971f3c7caeb87d597a81",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "ext_session_lock_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "ext_session_lock_surface_v1",
+          "version": 1
+        },
+        {
+          "name": "ext_session_lock_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "exttransientseat",
+      "xml": "exttransientseat.xml",
+      "source": "wayland-protocols",
+      "path": "staging/ext-transient-seat/ext-transient-seat-v1.xml",
+      "sha256": "d7d836047218030558bbd4e706e6a9b7e91338c4b2b637215be6a5d26da58d81",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "ext_transient_seat_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "ext_transient_seat_v1",
+          "version": 1
+        }
+      ],
+      "deps": []
+    },
+    {
+      "package": "extworkspace",
+      "xml": "extworkspace.xml",
+      "source": "wayland-protocols",
+      "path": "staging/ext-workspace/ext-workspace-v1.xml",
+      "sha256": "9b449d9d5d40f6032eba9813d18093b84f249a2cf38d6755dec7bca7eb96b0f3",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "ext_workspace_group_handle_v1",
+          "version": 1
+        },
+        {
+          "name": "ext_workspace_handle_v1",
+          "version": 1
+        },
+        {
+          "name": "ext_workspace_manager_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "fifo",
+      "xml": "fifo.xml",
+      "source": "wayland-protocols",
+      "path": "staging/fifo/fifo-v1.xml",
+      "sha256": "0b6c31dfe6bca19b712745c9de7a4a398558cfa1087b1938e96fd3b10ffc1069",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_fifo_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "wp_fifo_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "fractionalscale",
+      "xml": "fractionalscale.xml",
+      "source": "wayland-protocols",
+      "path": "staging/fractional-scale/fractional-scale-v1.xml",
+      "sha256": "5941de5d28f427ecdadddc8623a6f6af0a30b0ab4726847236ba7a7652b81316",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_fractional_scale_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "wp_fractional_scale_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "fullscreenshell",
+      "xml": "fullscreenshell.xml",
+      "source": "wayland-protocols",
+      "path": "unstable/fullscreen-shell/fullscreen-shell-unstable-v1.xml",
+      "sha256": "fcc50bf0b48610d55bbe096a53da433e8557ea36a31feba2d77bf0cb9181bb52",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwp_fullscreen_shell_mode_feedback_v1",
+          "version": 1
+        },
+        {
+          "name": "zwp_fullscreen_shell_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "idleinhibit",
+      "xml": "idleinhibit.xml",
+      "source": "wayland-protocols",
+      "path": "unstable/idle-inhibit/idle-inhibit-unstable-v1.xml",
+      "sha256": "c2ac9f002c6669ca6c02eb9b587b8e9108e3ce6deab4a2de58b576f4f864ca38",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwp_idle_inhibit_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "zwp_idle_inhibitor_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "inputmethod",
+      "xml": "inputmethod.xml",
+      "source": "wlroots",
+      "path": "protocol/input-method-unstable-v2.xml",
+      "sha256": "aaf68b2aec481f507a4b915ab7c624bf676495ebb2030eaf207a9c8bcac7630d",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwp_input_method_keyboard_grab_v2",
+          "version": 1
+        },
+        {
+          "name": "zwp_input_method_manager_v2",
+          "version": 1
+        },
+        {
+          "name": "zwp_input_method_v2",
+          "version": 1
+        },
+        {
+          "name": "zwp_input_popup_surface_v2",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "inputtimestamps",
+      "xml": "inputtimestamps.xml",
+      "source": "wayland-protocols",
+      "path": "unstable/input-timestamps/input-timestamps-unstable-v1.xml",
+      "sha256": "92d9911f070407d470458f59ffdee5406ce3b6368270a93e6ecd9f4f71368bb0",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwp_input_timestamps_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "zwp_input_timestamps_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "keyboardshortcutsinhibit",
+      "xml": "keyboardshortcutsinhibit.xml",
+      "source": "wayland-protocols",
+      "path": "unstable/keyboard-shortcuts-inhibit/keyboard-shortcuts-inhibit-unstable-v1.xml",
+      "sha256": "9117d9e8ec02e9a3c3c55803b41e1227e76986f555f7c12eeb29f796fa63e69b",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwp_keyboard_shortcuts_inhibit_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "zwp_keyboard_shortcuts_inhibitor_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "linuxdmabuf",
+      "xml": "linuxdmabuf.xml",
+      "source": "wayland-protocols",
+      "path": "stable/linux-dmabuf/linux-dmabuf-v1.xml",
+      "sha256": "2735bb4589cbb364dfcb6a821dd3abbf0c0257956b716b9691718ddfd453df4c",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwp_linux_buffer_params_v1",
+          "version": 6
+        },
+        {
+          "name": "zwp_linux_dmabuf_feedback_v1",
+          "version": 6
+        },
+        {
+          "name": "zwp_linux_dmabuf_v1",
+          "version": 6
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "linuxdrmsyncobj",
+      "xml": "linuxdrmsyncobj.xml",
+      "source": "wayland-protocols",
+      "path": "staging/linux-drm-syncobj/linux-drm-syncobj-v1.xml",
+      "sha256": "5ede41a56eced6aa635caa7ab2996066bff9fd211620dbf9f73aafab740bec71",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_linux_drm_syncobj_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "wp_linux_drm_syncobj_surface_v1",
+          "version": 1
+        },
+        {
+          "name": "wp_linux_drm_syncobj_timeline_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "linuxexplicitsynchronization",
+      "xml": "linuxexplicitsynchronization.xml",
+      "source": "wayland-protocols",
+      "path": "unstable/linux-explicit-synchronization/linux-explicit-synchronization-unstable-v1.xml",
+      "sha256": "4d83eed81e2911ec7731137d4209f685faeab76c15a994d8a46963a83fce02ea",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwp_linux_buffer_release_v1",
+          "version": 1
+        },
+        {
+          "name": "zwp_linux_explicit_synchronization_v1",
+          "version": 2
+        },
+        {
+          "name": "zwp_linux_surface_synchronization_v1",
+          "version": 2
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "pointerconstraints",
+      "xml": "pointerconstraints.xml",
+      "source": "wayland-protocols",
+      "path": "unstable/pointer-constraints/pointer-constraints-unstable-v1.xml",
+      "sha256": "f980fac900ba1dcfbbe97f588fc17b893926bd2b57624563653a1bfe4d035948",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwp_confined_pointer_v1",
+          "version": 1
+        },
+        {
+          "name": "zwp_locked_pointer_v1",
+          "version": 1
+        },
+        {
+          "name": "zwp_pointer_constraints_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "pointergestures",
+      "xml": "pointergestures.xml",
+      "source": "wayland-protocols",
+      "path": "unstable/pointer-gestures/pointer-gestures-unstable-v1.xml",
+      "sha256": "9f7b6ad542f444001312113395b8de6f24e59d6f0c57c9b44f6c3c498ef004d7",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwp_pointer_gesture_hold_v1",
+          "version": 3
+        },
+        {
+          "name": "zwp_pointer_gesture_pinch_v1",
+          "version": 3
+        },
+        {
+          "name": "zwp_pointer_gesture_swipe_v1",
+          "version": 3
+        },
+        {
+          "name": "zwp_pointer_gestures_v1",
+          "version": 3
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "pointerwarp",
+      "xml": "pointerwarp.xml",
+      "source": "wayland-protocols",
+      "path": "staging/pointer-warp/pointer-warp-v1.xml",
+      "sha256": "1389e89c68c6f6d231fd2dcda57fa9c75c5230d0ac1deffa8d80a7648e197e66",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_pointer_warp_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "presentationtime",
+      "xml": "presentationtime.xml",
+      "source": "wayland-protocols",
+      "path": "stable/presentation-time/presentation-time.xml",
+      "sha256": "dffac93bcb2bb1d8c385e72b8a8c2c0d4d79a336866322f3ba886dce2b27b1e2",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_presentation",
+          "version": 2
+        },
+        {
+          "name": "wp_presentation_feedback",
+          "version": 2
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "primaryselection",
+      "xml": "primaryselection.xml",
+      "source": "wayland-protocols",
+      "path": "unstable/primary-selection/primary-selection-unstable-v1.xml",
+      "sha256": "d568482ba84df6e531698b1f531810860995ca24d69495427fe43aee6017f52c",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwp_primary_selection_device_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "zwp_primary_selection_device_v1",
+          "version": 1
+        },
+        {
+          "name": "zwp_primary_selection_offer_v1",
+          "version": 1
+        },
+        {
+          "name": "zwp_primary_selection_source_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "relativepointer",
+      "xml": "relativepointer.xml",
+      "source": "wayland-protocols",
+      "path": "unstable/relative-pointer/relative-pointer-unstable-v1.xml",
+      "sha256": "ab4930dd3084f732b6fdd12ee6dbd0a112a758ed8a57b170366391dbeb1a22ff",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwp_relative_pointer_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "zwp_relative_pointer_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "securitycontext",
+      "xml": "securitycontext.xml",
+      "source": "wayland-protocols",
+      "path": "staging/security-context/security-context-v1.xml",
+      "sha256": "f4f8ba15ebd2df62db611b1de32e992f660a4aeeea83250cb88fa468da42ffcb",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_security_context_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "wp_security_context_v1",
+          "version": 1
+        }
+      ],
+      "deps": []
+    },
+    {
+      "package": "serverdecoration",
+      "xml": "serverdecoration.xml",
+      "source": "plasma-wayland-protocols",
+      "path": "src/protocols/server-decoration.xml",
+      "sha256": "c5f857734bb190dc9adfb65fb05550a6245f12af1a2be5eefd05be199805a68c",
+      "license": "LGPL-2.1-or-later",
+      "interfaces": [
+        {
+          "name": "org_kde_kwin_server_decoration",
+          "version": 1
+        },
+        {
+          "name": "org_kde_kwin_server_decoration_manager",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "singlepixelbuffer",
+      "xml": "singlepixelbuffer.xml",
+      "source": "wayland-protocols",
+      "path": "staging/single-pixel-buffer/single-pixel-buffer-v1.xml",
+      "sha256": "4c2cc1355b06a2d2fe68ccb1cf4b72cca51e1ba21c5d3e0c404f577f40d1301e",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_single_pixel_buffer_manager_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "tablet",
+      "xml": "tablet.xml",
+      "source": "wayland-protocols",
+      "path": "stable/tablet/tablet-v2.xml",
+      "sha256": "ac1128b26c779cf90b9ed71182ba5e34a7262826789adae206d825a4d45908b4",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwp_tablet_manager_v2",
+          "version": 2
+        },
+        {
+          "name": "zwp_tablet_pad_dial_v2",
+          "version": 2
+        },
+        {
+          "name": "zwp_tablet_pad_group_v2",
+          "version": 2
+        },
+        {
+          "name": "zwp_tablet_pad_ring_v2",
+          "version": 2
+        },
+        {
+          "name": "zwp_tablet_pad_strip_v2",
+          "version": 2
+        },
+        {
+          "name": "zwp_tablet_pad_v2",
+          "version": 2
+        },
+        {
+          "name": "zwp_tablet_seat_v2",
+          "version": 2
+        },
+        {
+          "name": "zwp_tablet_tool_v2",
+          "version": 2
+        },
+        {
+          "name": "zwp_tablet_v2",
+          "version": 2
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "tearingcontrol",
+      "xml": "tearingcontrol.xml",
+      "source": "wayland-protocols",
+      "path": "staging/tearing-control/tearing-control-v1.xml",
+      "sha256": "846895b4a90ba1ddd75673cefc596480beef318f1694ec7dbca0fec54bb27043",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_tearing_control_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "wp_tearing_control_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "textinput",
+      "xml": "textinput.xml",
+      "source": "wayland-protocols",
+      "path": "unstable/text-input/text-input-unstable-v3.xml",
+      "sha256": "160815cda13c285a30df1971d8f0a5b3aac07071537df59916d2f748b18e4f59",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwp_text_input_manager_v3",
+          "version": 2
+        },
+        {
+          "name": "zwp_text_input_v3",
+          "version": 2
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "viewporter",
+      "xml": "viewporter.xml",
+      "source": "wayland-protocols",
+      "path": "stable/viewporter/viewporter.xml",
+      "sha256": "dcb12279a03746301fe490aaed4b38a403485a925abfce2ccfceb644e104fe71",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wp_viewport",
+          "version": 1
+        },
+        {
+          "name": "wp_viewporter",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "virtualkeyboard",
+      "xml": "virtualkeyboard.xml",
+      "source": "wlroots",
+      "path": "protocol/virtual-keyboard-unstable-v1.xml",
+      "sha256": "7ad7870003ecd592cae47dc19d277a609b7f18fd7b7be012623cf3225a7294f5",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwp_virtual_keyboard_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "zwp_virtual_keyboard_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "wayland",
+      "xml": "wayland.xml",
+      "source": "wayland",
+      "path": "protocol/wayland.xml",
+      "sha256": "cc860987e54f8d85c940e97fa1270c69b6e4ad31fbcf5a7f00107ce1157f5e07",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "wl_buffer",
+          "version": 1
+        },
+        {
+          "name": "wl_callback",
+          "version": 1
+        },
+        {
+          "name": "wl_compositor",
+          "version": 7
+        },
+        {
+          "name": "wl_data_device",
+          "version": 4
+        },
+        {
+          "name": "wl_data_device_manager",
+          "version": 4
+        },
+        {
+          "name": "wl_data_offer",
+          "version": 4
+        },
+        {
+          "name": "wl_data_source",
+          "version": 4
+        },
+        {
+          "name": "wl_display",
+          "version": 1
+        },
+        {
+          "name": "wl_fixes",
+          "version": 2
+        },
+        {
+          "name": "wl_keyboard",
+          "version": 11
+        },
+        {
+          "name": "wl_output",
+          "version": 4
+        },
+        {
+          "name": "wl_pointer",
+          "version": 11
+        },
+        {
+          "name": "wl_region",
+          "version": 7
+        },
+        {
+          "name": "wl_registry",
+          "version": 1
+        },
+        {
+          "name": "wl_seat",
+          "version": 11
+        },
+        {
+          "name": "wl_shell",
+          "version": 1
+        },
+        {
+          "name": "wl_shell_surface",
+          "version": 1
+        },
+        {
+          "name": "wl_shm",
+          "version": 3
+        },
+        {
+          "name": "wl_shm_pool",
+          "version": 3
+        },
+        {
+          "name": "wl_subcompositor",
+          "version": 1
+        },
+        {
+          "name": "wl_subsurface",
+          "version": 1
+        },
+        {
+          "name": "wl_surface",
+          "version": 7
+        },
+        {
+          "name": "wl_touch",
+          "version": 11
+        }
+      ],
+      "deps": []
+    },
+    {
+      "package": "wlrdatacontrol",
+      "xml": "wlrdatacontrol.xml",
+      "source": "wlr-protocols",
+      "path": "unstable/wlr-data-control-unstable-v1.xml",
+      "sha256": "5f10d6bf9bfa9d12266a6f423fb77bbb98e415f6d64fe24680710ffb362a7082",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwlr_data_control_device_v1",
+          "version": 2
+        },
+        {
+          "name": "zwlr_data_control_manager_v1",
+          "version": 2
+        },
+        {
+          "name": "zwlr_data_control_offer_v1",
+          "version": 1
+        },
+        {
+          "name": "zwlr_data_control_source_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "wlrexportdmabuf",
+      "xml": "wlrexportdmabuf.xml",
+      "source": "wlr-protocols",
+      "path": "unstable/wlr-export-dmabuf-unstable-v1.xml",
+      "sha256": "24e2334d804eb12b65a0471ec41ba9aed2b7997caf81c0fe4dc44b86b7f3fed8",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwlr_export_dmabuf_frame_v1",
+          "version": 1
+        },
+        {
+          "name": "zwlr_export_dmabuf_manager_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "wlrforeigntoplevelmanagement",
+      "xml": "wlrforeigntoplevelmanagement.xml",
+      "source": "wlr-protocols",
+      "path": "unstable/wlr-foreign-toplevel-management-unstable-v1.xml",
+      "sha256": "4ecc4588858e29fe680a33521e1f22bcf22071d66d1553fe96b4ddec03d591d2",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwlr_foreign_toplevel_handle_v1",
+          "version": 3
+        },
+        {
+          "name": "zwlr_foreign_toplevel_manager_v1",
+          "version": 3
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "wlrgammacontrol",
+      "xml": "wlrgammacontrol.xml",
+      "source": "wlr-protocols",
+      "path": "unstable/wlr-gamma-control-unstable-v1.xml",
+      "sha256": "4065cbc291a80348b7ef311168fbfb5cf245efe977a6dc32211291ef1a9529a1",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwlr_gamma_control_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "zwlr_gamma_control_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "wlrinputinhibitor",
+      "xml": "wlrinputinhibitor.xml",
+      "source": "wlr-protocols",
+      "path": "unstable/wlr-input-inhibitor-unstable-v1.xml",
+      "sha256": "325ee67e0762258ad0dcf43d1366f36fe6a3ac2bec84eaf1172b1a5e1187edf8",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwlr_input_inhibit_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "zwlr_input_inhibitor_v1",
+          "version": 1
+        }
+      ],
+      "deps": []
+    },
+    {
+      "package": "wlrlayershell",
+      "xml": "wlrlayershell.xml",
+      "source": "wlr-protocols",
+      "path": "unstable/wlr-layer-shell-unstable-v1.xml",
+      "sha256": "87e0b9c837aecd6977f76f3c47d73088b7159871f5d979dc1840f6cadb5e2ed8",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwlr_layer_shell_v1",
+          "version": 5
+        },
+        {
+          "name": "zwlr_layer_surface_v1",
+          "version": 5
+        }
+      ],
+      "deps": [
+        "wayland",
+        "xdgshell"
+      ]
+    },
+    {
+      "package": "wlroutputmanagement",
+      "xml": "wlroutputmanagement.xml",
+      "source": "wlr-protocols",
+      "path": "unstable/wlr-output-management-unstable-v1.xml",
+      "sha256": "65b0f82a6cf129bf1a1c31a2428795abd33886c15ddd5f3ad97e5922d7bdc3a7",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwlr_output_configuration_head_v1",
+          "version": 4
+        },
+        {
+          "name": "zwlr_output_configuration_v1",
+          "version": 4
+        },
+        {
+          "name": "zwlr_output_head_v1",
+          "version": 4
+        },
+        {
+          "name": "zwlr_output_manager_v1",
+          "version": 4
+        },
+        {
+          "name": "zwlr_output_mode_v1",
+          "version": 3
+        }
+      ],
+      "deps": []
+    },
+    {
+      "package": "wlroutputpowermanagement",
+      "xml": "wlroutputpowermanagement.xml",
+      "source": "wlr-protocols",
+      "path": "unstable/wlr-output-power-management-unstable-v1.xml",
+      "sha256": "7ebd98f3449d246a57829e4b4dd9fbc3ef98e3dd42fa94ea102f14f490eb20de",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwlr_output_power_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "zwlr_output_power_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "wlrscreencopy",
+      "xml": "wlrscreencopy.xml",
+      "source": "wlr-protocols",
+      "path": "unstable/wlr-screencopy-unstable-v1.xml",
+      "sha256": "131b8f9b4aad0c8a9cf705e90d2a1511a5ca0c477637fd3400cf1cc4fa963fb8",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwlr_screencopy_frame_v1",
+          "version": 3
+        },
+        {
+          "name": "zwlr_screencopy_manager_v1",
+          "version": 3
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "wlrvirtualpointer",
+      "xml": "wlrvirtualpointer.xml",
+      "source": "wlr-protocols",
+      "path": "unstable/wlr-virtual-pointer-unstable-v1.xml",
+      "sha256": "3ff6d540be0bc5228195bf072bde42117ea17945a5c2061add5d3cf97d6bb524",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwlr_virtual_pointer_manager_v1",
+          "version": 2
+        },
+        {
+          "name": "zwlr_virtual_pointer_v1",
+          "version": 2
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "xdgactivation",
+      "xml": "xdgactivation.xml",
+      "source": "wayland-protocols",
+      "path": "staging/xdg-activation/xdg-activation-v1.xml",
+      "sha256": "d8418be2d5738d50aff788bef1c7574f33f26659aa045447ff2ef9b78c58fe01",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "xdg_activation_token_v1",
+          "version": 1
+        },
+        {
+          "name": "xdg_activation_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "xdgdecoration",
+      "xml": "xdgdecoration.xml",
+      "source": "wayland-protocols",
+      "path": "unstable/xdg-decoration/xdg-decoration-unstable-v1.xml",
+      "sha256": "68753c4a85a28659e3aa1fe0f138329a8bf3dff0b4789f4663a2c7fedbfecf2f",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zxdg_decoration_manager_v1",
+          "version": 2
+        },
+        {
+          "name": "zxdg_toplevel_decoration_v1",
+          "version": 2
+        }
+      ],
+      "deps": [
+        "xdgshell"
+      ]
+    },
+    {
+      "package": "xdgdialog",
+      "xml": "xdgdialog.xml",
+      "source": "wayland-protocols",
+      "path": "staging/xdg-dialog/xdg-dialog-v1.xml",
+      "sha256": "2822956bdf13d51848ff4b5e29c509028c1204c6e06262ee926b001f43a42dbb",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "xdg_dialog_v1",
+          "version": 1
+        },
+        {
+          "name": "xdg_wm_dialog_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "xdgshell"
+      ]
+    },
+    {
+      "package": "xdgforeign",
+      "xml": "xdgforeign.xml",
+      "source": "wayland-protocols",
+      "path": "unstable/xdg-foreign/xdg-foreign-unstable-v2.xml",
+      "sha256": "625d83fbb068f48e69e739eafde507f10cdfe7480146f3ac10af9a2ddf551c80",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zxdg_exported_v2",
+          "version": 1
+        },
+        {
+          "name": "zxdg_exporter_v2",
+          "version": 1
+        },
+        {
+          "name": "zxdg_imported_v2",
+          "version": 1
+        },
+        {
+          "name": "zxdg_importer_v2",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "xdgoutput",
+      "xml": "xdgoutput.xml",
+      "source": "wayland-protocols",
+      "path": "unstable/xdg-output/xdg-output-unstable-v1.xml",
+      "sha256": "363d547c3eefe8959160cac903ff90b311d4b183005557d73640d9df2cfd7f79",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zxdg_output_manager_v1",
+          "version": 3
+        },
+        {
+          "name": "zxdg_output_v1",
+          "version": 3
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "xdgsessionmanagement",
+      "xml": "xdgsessionmanagement.xml",
+      "source": "wayland-protocols",
+      "path": "staging/xdg-session-management/xdg-session-management-v1.xml",
+      "sha256": "3674591ca8e68f76297c535e8edd6783d84b59086c38ebe08ff5ff1f2dec5bae",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "xdg_session_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "xdg_session_v1",
+          "version": 1
+        },
+        {
+          "name": "xdg_toplevel_session_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "xdgshell"
+      ]
+    },
+    {
+      "package": "xdgshell",
+      "xml": "xdgshell.xml",
+      "source": "wayland-protocols",
+      "path": "stable/xdg-shell/xdg-shell.xml",
+      "sha256": "7ba7f9c8473deee674cb1f154a18abd0bb0cc072604fc055b0c15e459fc4c7df",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "xdg_popup",
+          "version": 7
+        },
+        {
+          "name": "xdg_positioner",
+          "version": 7
+        },
+        {
+          "name": "xdg_surface",
+          "version": 7
+        },
+        {
+          "name": "xdg_toplevel",
+          "version": 7
+        },
+        {
+          "name": "xdg_wm_base",
+          "version": 7
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "xdgsystembell",
+      "xml": "xdgsystembell.xml",
+      "source": "wayland-protocols",
+      "path": "staging/xdg-system-bell/xdg-system-bell-v1.xml",
+      "sha256": "863c5efcb1a19961c019d23b9875ab84a158da802f5622f5ecc30522c6019330",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "xdg_system_bell_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "xdgtopleveldrag",
+      "xml": "xdgtopleveldrag.xml",
+      "source": "wayland-protocols",
+      "path": "staging/xdg-toplevel-drag/xdg-toplevel-drag-v1.xml",
+      "sha256": "687d7a1db0ced0e2794dc2d5be1a80b1dc71c46a055aedd882838586345ee1dc",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "xdg_toplevel_drag_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "xdg_toplevel_drag_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland",
+        "xdgshell"
+      ]
+    },
+    {
+      "package": "xdgtoplevelicon",
+      "xml": "xdgtoplevelicon.xml",
+      "source": "wayland-protocols",
+      "path": "staging/xdg-toplevel-icon/xdg-toplevel-icon-v1.xml",
+      "sha256": "5e57a72fa9ccf1666c56d49cc86408f068c21e5e6a09ddd468ee65d08478f882",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "xdg_toplevel_icon_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "xdg_toplevel_icon_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland",
+        "xdgshell"
+      ]
+    },
+    {
+      "package": "xdgtopleveltag",
+      "xml": "xdgtopleveltag.xml",
+      "source": "wayland-protocols",
+      "path": "staging/xdg-toplevel-tag/xdg-toplevel-tag-v1.xml",
+      "sha256": "bde3615b434a237388c5592028345eef185ab1e7ade9023dd2413a4b2c56ab9f",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "xdg_toplevel_tag_manager_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "xdgshell"
+      ]
+    },
+    {
+      "package": "xwaylandkeyboardgrab",
+      "xml": "xwaylandkeyboardgrab.xml",
+      "source": "wayland-protocols",
+      "path": "unstable/xwayland-keyboard-grab/xwayland-keyboard-grab-unstable-v1.xml",
+      "sha256": "fcc1e24ec465c209de576f75bf87438b8339e4da42051a3f26b48916292c7c6f",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "zwp_xwayland_keyboard_grab_manager_v1",
+          "version": 1
+        },
+        {
+          "name": "zwp_xwayland_keyboard_grab_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    },
+    {
+      "package": "xwaylandshell",
+      "xml": "xwaylandshell.xml",
+      "source": "wayland-protocols",
+      "path": "staging/xwayland-shell/xwayland-shell-v1.xml",
+      "sha256": "a6589c3205d1f424cbd2708c1507daf143db2d355dcd931f6f79986c0dc205b6",
+      "license": "MIT",
+      "interfaces": [
+        {
+          "name": "xwayland_shell_v1",
+          "version": 1
+        },
+        {
+          "name": "xwayland_surface_v1",
+          "version": 1
+        }
+      ],
+      "deps": [
+        "wayland"
+      ]
+    }
+  ]
 }

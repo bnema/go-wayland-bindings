@@ -1,0 +1,7 @@
+{
+  "wayland": "1.26.0",
+  "wayland-protocols": "1.49",
+  "wlr-protocols": "bf4fc79abc359eea5a0edec0ac6d4a2b2955f82a",
+  "wlroots": "0.20.2",
+  "plasma-wayland-protocols": "v1.23.0"
+}
