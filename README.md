@@ -111,6 +111,11 @@ env CGO_ENABLED=0 go test ./...
 go test -race ./...          # needs libwayland-server installed
 ```
 
+The end-to-end tests in `internal/e2e` (and the race run) need
+`libwayland-server.so.0`, which the server runtime loads at run time. Without
+it those tests are skipped, with the reason shown by `go test -v`; any other
+server start failure still fails them.
+
 Two environment variables enable tests that are skipped by default:
 
 - `WLTURBO_HEADLESS`: path to a headless compositor binary (NeferWL) for the

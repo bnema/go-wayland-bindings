@@ -21,6 +21,12 @@ func startServer(t *testing.T, captured ...chan *server.Resource) (socket string
 	t.Helper()
 	d, err := server.NewDisplay()
 	if err != nil {
+		// purego-libwayland reports a missing shared library as
+		// "open libwayland-server.so.0: ..."; it has no typed error. Only that
+		// case skips: any other failure is a real one.
+		if strings.Contains(err.Error(), "open libwayland-server.so.0") {
+			t.Skipf("libwayland-server.so.0 not available: %v", err)
+		}
 		t.Fatal(err)
 	}
 	socket = filepath.Join(t.TempDir(), "wayland-test")

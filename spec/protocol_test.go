@@ -72,12 +72,6 @@ func TestParseWayland(t *testing.T) {
 	if release.Type != "destructor" || release.Since != 3 {
 		t.Errorf("wl_pointer.release = type %q since %d", release.Type, release.Since)
 	}
-	if got := findMessage(t, findInterface(t, p, "wl_pointer").Requests, "set_cursor").SinceOrOne(); got != 1 {
-		t.Errorf("SinceOrOne of unversioned message = %d, want 1", got)
-	}
-	if got := release.SinceOrOne(); got != 3 {
-		t.Errorf("SinceOrOne = %d, want 3", got)
-	}
 
 	// since on an enum.
 	if e := findEnum(t, findInterface(t, p, "wl_data_device_manager"), "dnd_action"); !e.Bitfield || e.Since != 3 {

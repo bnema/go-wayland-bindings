@@ -73,6 +73,11 @@ func Open(pkg string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	return m.Open(pkg)
+}
+
+// Open returns the embedded XML of package pkg, which must be listed in m.
+func (m *Manifest) Open(pkg string) ([]byte, error) {
 	e, ok := m.Package(pkg)
 	if !ok {
 		return nil, fmt.Errorf("unknown protocol package %q", pkg)

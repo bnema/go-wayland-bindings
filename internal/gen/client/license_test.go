@@ -6,6 +6,8 @@ import (
 	"os"
 	"strings"
 	"testing"
+
+	"github.com/bnema/go-wayland-bindings/spec"
 )
 
 func TestIncludedLGPLLicense(t *testing.T) {
@@ -20,14 +22,18 @@ func TestIncludedLGPLLicense(t *testing.T) {
 }
 
 func TestGeneratedSourceRetainsProtocolLicense(t *testing.T) {
-	for _, source := range []string{
-		"testdata/server-decoration.xml",
-		"testdata/wlr-layer-shell-unstable-v1.xml",
-		"../../../spec/testdata/wayland.xml",
+	for _, c := range []struct{ pkg, source string }{
+		{"serverdecoration", "server-decoration.xml"},
+		{"wlrlayershell", "wlr-layer-shell-unstable-v1.xml"},
+		{"wayland", "wayland.xml"},
 	} {
-		t.Run(source, func(t *testing.T) {
+		t.Run(c.pkg, func(t *testing.T) {
+			data, err := spec.Open(c.pkg)
+			if err != nil {
+				t.Fatal(err)
+			}
 			s := NewScanner()
-			if err := s.ParseXML(source); err != nil {
+			if err := s.Load(data, c.source); err != nil {
 				t.Fatal(err)
 			}
 			s.CrossPackage = map[string]string{
@@ -42,6 +48,9 @@ func TestGeneratedSourceRetainsProtocolLicense(t *testing.T) {
 			header, _, ok := strings.Cut(string(generated), "\npackage wayland")
 			if !ok {
 				t.Fatal("package declaration missing")
+			}
+			if !strings.Contains(header, "// Source: "+c.source+"\n") {
+				t.Errorf("source name missing from header:\n%s", header)
 			}
 			for _, line := range strings.Split(strings.TrimSpace(s.protocol.Copyright), "\n") {
 				if text := strings.TrimSpace(line); text != "" && !strings.Contains(header, text) {

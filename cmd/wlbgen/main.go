@@ -75,7 +75,7 @@ func run(args []string, stderr io.Writer) error {
 		if fs.NArg() != 0 || *side != "" || *pkg != "" || *out != "" || len(imports) != 0 {
 			return fmt.Errorf("-all takes no other arguments except -root")
 		}
-		return generateAll(m, spec.Open, *root)
+		return generateAll(m, m.Open, *root)
 	}
 	if fs.NArg() != 1 {
 		return fmt.Errorf("want -all, or -side/-package/-out and one XML file")
@@ -108,12 +108,18 @@ func generatedPath(root, side, pkg string) string {
 	return filepath.Join(root, side, pkg, pkg+"_generated.go")
 }
 
+// generated is one rendered output file.
+type generated struct {
+	path string
+	data []byte
+}
+
 // generateAll writes every package of m below root and removes stale output.
+// Everything is rendered in memory first, so an error leaves the tree as it
+// was.
 func generateAll(m *spec.Manifest, open func(string) ([]byte, error), root string) error {
-	if err := removeStale(m, root); err != nil {
-		return err
-	}
 	owners := m.Owners()
+	var files []generated
 	for _, e := range m.Protocols {
 		data, err := open(e.Package)
 		if err != nil {
@@ -126,9 +132,11 @@ func generateAll(m *spec.Manifest, open func(string) ([]byte, error), root strin
 
 		s := client.NewScanner()
 		s.Tool = tool
+		spdx := ""
 		if e.License != "" && e.License != "MIT" {
-			s.SPDXLicense = e.License
+			spdx = e.License
 		}
+		s.SPDXLicense = spdx
 		s.CrossPackage = map[string]string{}
 		for iface, owner := range owners {
 			if owner != e.Package {
@@ -142,11 +150,12 @@ func generateAll(m *spec.Manifest, open func(string) ([]byte, error), root strin
 		if err != nil {
 			return fmt.Errorf("client/%s: %w", e.Package, err)
 		}
-		if err := writeFile(generatedPath(root, "client", e.Package), src); err != nil {
-			return err
-		}
+		files = append(files, generated{generatedPath(root, "client", e.Package), src})
 
-		opts := server.Options{Package: e.Package, Imports: map[string]string{}, Owners: map[string]string{}, Tool: tool}
+		opts := server.Options{
+			Package: e.Package, Imports: map[string]string{}, Owners: map[string]string{}, Tool: tool,
+			Copyright: p.Copyright, SPDX: spdx,
+		}
 		for iface, owner := range owners {
 			if owner != e.Package {
 				opts.Owners[iface] = owner
@@ -161,7 +170,13 @@ func generateAll(m *spec.Manifest, open func(string) ([]byte, error), root strin
 		if err != nil {
 			return fmt.Errorf("server/%s: %w", e.Package, err)
 		}
-		if err := writeFile(generatedPath(root, "server", e.Package), src); err != nil {
+		files = append(files, generated{generatedPath(root, "server", e.Package), src})
+	}
+	if err := removeStale(m, root); err != nil {
+		return err
+	}
+	for _, f := range files {
+		if err := writeFile(f.path, f.data); err != nil {
 			return err
 		}
 	}
@@ -256,6 +271,7 @@ func generateCustom(m *spec.Manifest, side, pkg, source string, data []byte, ove
 		return nil, fmt.Errorf("%s: %w", source, err)
 	}
 	foreign := foreignInterfaces(p)
+	owners := m.Owners()
 	switch side {
 	case "client":
 		s := client.NewScanner()
@@ -264,7 +280,7 @@ func generateCustom(m *spec.Manifest, side, pkg, source string, data []byte, ove
 		for _, iface := range foreign {
 			if p, ok := overrides[iface]; ok {
 				s.CrossPackage[iface] = p
-			} else if owner, ok := m.Lookup(iface); ok {
+			} else if owner, ok := owners[iface]; ok {
 				s.CrossPackage[iface] = clientImport(owner)
 			}
 			// Unresolved interfaces are reported by the generator unless
@@ -275,12 +291,15 @@ func generateCustom(m *spec.Manifest, side, pkg, source string, data []byte, ove
 		}
 		return s.Generate(pkg)
 	case "server":
-		opts := server.Options{Package: pkg, Imports: map[string]string{}, Owners: map[string]string{}, Tool: tool}
+		opts := server.Options{
+			Package: pkg, Imports: map[string]string{}, Owners: map[string]string{}, Tool: tool,
+			Copyright: p.Copyright,
+		}
 		for _, iface := range foreign {
 			var alias, importPath string
 			if p, ok := overrides[iface]; ok {
 				alias, importPath = importAlias(p), p
-			} else if owner, ok := m.Lookup(iface); ok {
+			} else if owner, ok := owners[iface]; ok {
 				alias, importPath = owner, serverImport(owner)
 			} else {
 				return nil, fmt.Errorf("unresolved interface %q: not in the manifest; add -import %s=<importpath>", iface, iface)

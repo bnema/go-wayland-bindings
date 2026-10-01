@@ -185,7 +185,9 @@ func TestArgumentRoundtripAndPostError(t *testing.T) {
 		c.Context().Register(p)
 		// wlturbo rejects events without a declared signature; these hand-written
 		// proxies declare theirs explicitly.
-		c.RegisterEventSignature(id, uint16(wayland.SeatEventName), "string,")
+		if name == "wl_seat" {
+			c.RegisterEventSignature(id, uint16(wayland.SeatEventName), "string,")
+		}
 		return id, p
 	}
 	manager, _ := bind("wl_data_device_manager")

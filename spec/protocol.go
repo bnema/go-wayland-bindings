@@ -78,14 +78,6 @@ func Parse(data []byte) (*Protocol, error) {
 	return &p, nil
 }
 
-// SinceOrOne returns the message version, treating an absent "since" as 1.
-func (m Message) SinceOrOne() int {
-	if m.Since < 1 {
-		return 1
-	}
-	return m.Since
-}
-
 // ReferencedInterfaces returns the interfaces named by arguments of p, in
 // first-seen order, without duplicates.
 func (p *Protocol) ReferencedInterfaces() []string {

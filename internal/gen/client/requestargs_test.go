@@ -72,7 +72,7 @@ func TestGeneratedRequestsWireAndAllocations(t *testing.T) {
 		}
 	}
 	write("args.go", generateArgsFixture(t))
-	writeTempModule(t, dir, "example.com/argsfix")
+	writeTempModule(t, dir, "example.com/argsfix", false)
 	write("args_test.go", `package argsfix
 
 import (

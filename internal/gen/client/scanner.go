@@ -18,6 +18,7 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/bnema/go-wayland-bindings/internal/gen/genutil"
 	"github.com/bnema/go-wayland-bindings/spec"
 )
 
@@ -207,27 +208,8 @@ func (s *Scanner) prepareTemplateData(packageName string) (templateData, error) 
 	if data.Tool == "" {
 		data.Tool = DefaultTool
 	}
-	if notice := strings.TrimSpace(s.protocol.Copyright); notice != "" {
-		var comment strings.Builder
-		for _, line := range strings.Split(notice, "\n") {
-			comment.WriteString("// ")
-			comment.WriteString(strings.TrimSpace(line))
-			comment.WriteByte('\n')
-		}
-		data.Copyright = comment.String()
-	}
-	if id := strings.TrimSpace(s.SPDXLicense); id != "" {
-		line := "SPDX-License-Identifier: " + id
-		retained := false
-		for _, l := range strings.Split(s.protocol.Copyright, "\n") {
-			if strings.TrimSpace(l) == line {
-				retained = true
-			}
-		}
-		if !retained {
-			data.SPDX = id
-		}
-	}
+	data.Copyright = genutil.CommentBlock(s.protocol.Copyright)
+	data.SPDX = genutil.SPDXID(s.SPDXLicense, s.protocol.Copyright)
 
 	imports := []string{TransportImport}
 	usedCross := make(map[string]bool)
@@ -547,7 +529,13 @@ func (s *Scanner) processEvent(event spec.Message, opcode int) (eventData, error
 
 		case "object":
 			// Object references are reported as raw object IDs: the generated
-			// layer does not own a registry of foreign proxies.
+			// layer does not own a registry of foreign proxies. A declared
+			// interface must still resolve, so typos fail like in requests.
+			if arg.Interface != "" {
+				if _, err := s.goTypeForInterface(arg.Interface); err != nil {
+					return data, fmt.Errorf("%s.%s: %w", event.Name, arg.Name, err)
+				}
+			}
 			data.DecodeLines = append(data.DecodeLines, fmt.Sprintf("%sID := event.Uint32()", name))
 			params = append(params, name+"ID uint32")
 			args = append(args, name+"ID")

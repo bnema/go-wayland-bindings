@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/bnema/go-wayland-bindings/spec"
 )
 
 func TestResolution(t *testing.T) {
@@ -29,8 +31,12 @@ func TestResolution(t *testing.T) {
 	}
 }
 func TestCoreGeneration(t *testing.T) {
+	data, err := spec.Open("wayland")
+	if err != nil {
+		t.Fatal(err)
+	}
 	s := NewScanner()
-	if err := s.ParseXML("../../../spec/testdata/wayland.xml"); err != nil {
+	if err := s.Load(data, "wayland.xml"); err != nil {
 		t.Fatal(err)
 	}
 	b, err := s.Generate("wayland")
@@ -105,7 +111,7 @@ func TestMappedExtensionCompilesAndDispatchesChild(t *testing.T) {
 	if err := s.ParseXML(path); err != nil {
 		t.Fatal(err)
 	}
-	s.CrossPackage = map[string]string{"wl_buffer": "github.com/bnema/wlturbo/protocol/core"}
+	s.CrossPackage = map[string]string{"wl_buffer": "github.com/bnema/go-wayland-bindings/client/wayland"}
 	generated, err := s.Generate("ext")
 	if err != nil {
 		t.Fatal(err)
@@ -113,7 +119,7 @@ func TestMappedExtensionCompilesAndDispatchesChild(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(dir, "ext.go"), generated, 0600); err != nil {
 		t.Fatal(err)
 	}
-	writeTempModule(t, dir, "example.com/ext")
+	writeTempModule(t, dir, "example.com/ext", true)
 	test := `package ext
 import (
  "encoding/binary"
@@ -121,7 +127,7 @@ import (
  "os"
  "testing"
  "github.com/bnema/wlturbo"
- "github.com/bnema/wlturbo/protocol/core"
+ "github.com/bnema/go-wayland-bindings/client/wayland"
  "golang.org/x/sys/unix"
 )
 func TestTypedChild(t *testing.T) {
@@ -131,8 +137,8 @@ func TestTypedChild(t *testing.T) {
  p, err := net.FileConn(b); b.Close(); if err != nil { t.Fatal(err) }; defer p.Close()
  d, err := wlturbo.ConnectFromConn(c); if err != nil { t.Fatal(err) }; defer d.Close()
  parent := NewExtParent(d.Context()); parent.SetID(d.AllocateID()); d.Context().Register(parent)
- var child *core.Buffer
- parent.OnChild(func(b *core.Buffer) { child = b })
+ var child *wayland.Buffer
+ parent.OnChild(func(b *wayland.Buffer) { child = b })
  frame := make([]byte, 12); binary.LittleEndian.PutUint32(frame, parent.ID()); binary.LittleEndian.PutUint32(frame[4:], 12<<16); binary.LittleEndian.PutUint32(frame[8:], 0xff000001)
  if _, err := p.Write(frame); err != nil { t.Fatal(err) }
  if err := d.Dispatch(); err != nil { t.Fatal(err) }
@@ -152,5 +158,22 @@ func TestTypedChild(t *testing.T) {
 	cmd.Env = tempModuleEnv()
 	if out, err := cmd.CombinedOutput(); err != nil {
 		t.Fatalf("generated extension test: %v\n%s", err, out)
+	}
+}
+
+// An event object argument that names an interface nobody maps is an error,
+// as it is for requests, even though the event only reports the object ID.
+func TestUnresolvedEventObjectInterface(t *testing.T) {
+	xml := `<protocol name="ext"><interface name="ext_parent" version="1"><event name="focus"><arg name="surface" type="object" interface="wl_surfce"/></event></interface></protocol>`
+	s := NewScanner()
+	if err := s.Load([]byte(xml), "ext.xml"); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := s.Generate("ext"); err == nil || !strings.Contains(err.Error(), "wl_surfce") {
+		t.Fatalf("unresolved event object interface: %v", err)
+	}
+	s.CrossPackage = map[string]string{"wl_surfce": spec.ModulePath + "/client/wayland"}
+	if _, err := s.Generate("ext"); err != nil {
+		t.Fatalf("mapped interface: %v", err)
 	}
 }
