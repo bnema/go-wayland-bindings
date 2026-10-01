@@ -1,0 +1,4 @@
+.worktrees/
+*.test
+*.out
+coverage.txt
