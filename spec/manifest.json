@@ -22,7 +22,7 @@
       "id": "wlr-protocols",
       "url": "https://gitlab.freedesktop.org/wlroots/wlr-protocols.git",
       "ref": "master",
-      "commit": "bf4fc79abc359eea5a0edec0ac6d4a2b2955f82a"
+      "commit": "1106a4a1c57562ddd438c547da4c0d6dc150d624"
     },
     {
       "id": "wlroots",
@@ -1149,7 +1149,7 @@
       "xml": "wlrforeigntoplevelmanagement.xml",
       "source": "wlr-protocols",
       "path": "unstable/wlr-foreign-toplevel-management-unstable-v1.xml",
-      "sha256": "4ecc4588858e29fe680a33521e1f22bcf22071d66d1553fe96b4ddec03d591d2",
+      "sha256": "a5a030786a9281e90542eb7c4084f0dbd6a50a7a2975cafa01fa848eebe6de15",
       "license": "MIT",
       "interfaces": [
         {
