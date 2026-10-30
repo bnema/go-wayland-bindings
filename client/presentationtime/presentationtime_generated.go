@@ -51,10 +51,16 @@ const KIND_HW_COMPLETION = 0x4
 // KIND_ZERO_COPY is the kind zero_copy value.
 const KIND_ZERO_COPY = 0x8
 
+// KIND_FIXED_RATE is the kind fixed_rate value.
+const KIND_FIXED_RATE = 0x10
+
+// KIND_VARIABLE_RATE is the kind variable_rate value.
+const KIND_VARIABLE_RATE = 0x20
+
 // WpPresentationInterface is the protocol interface name.
 const WpPresentationInterface = "wp_presentation"
 
-// WpPresentation is the generated binding for wp_presentation version 2.
+// WpPresentation is the generated binding for wp_presentation version 3.
 type WpPresentation struct {
 	wl.BaseProxy
 	// handlersMu guards the handler slices: a client may register or replace
@@ -142,7 +148,7 @@ func (o *WpPresentation) Dispatch(event *wl.Event) {
 // WpPresentationFeedbackInterface is the protocol interface name.
 const WpPresentationFeedbackInterface = "wp_presentation_feedback"
 
-// WpPresentationFeedback is the generated binding for wp_presentation_feedback version 2.
+// WpPresentationFeedback is the generated binding for wp_presentation_feedback version 3.
 type WpPresentationFeedback struct {
 	wl.BaseProxy
 	// handlersMu guards the handler slices: a client may register or replace

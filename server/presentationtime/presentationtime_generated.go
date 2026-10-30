@@ -34,8 +34,8 @@ var WpPresentationInterface *server.Interface
 var WpPresentationFeedbackInterface *server.Interface
 
 func init() {
-	WpPresentationInterface = &server.Interface{Name: "wp_presentation", Version: 2}
-	WpPresentationFeedbackInterface = &server.Interface{Name: "wp_presentation_feedback", Version: 2}
+	WpPresentationInterface = &server.Interface{Name: "wp_presentation", Version: 3}
+	WpPresentationFeedbackInterface = &server.Interface{Name: "wp_presentation_feedback", Version: 3}
 	WpPresentationInterface.Requests = []server.Message{
 		{Name: "destroy", Signature: "", Types: []*server.Interface{}},
 		{Name: "feedback", Signature: "on", Types: []*server.Interface{wayland.SurfaceInterface, WpPresentationFeedbackInterface}},
@@ -134,6 +134,8 @@ const (
 	WpPresentationFeedbackKindHwClock      WpPresentationFeedbackKind = 0x2
 	WpPresentationFeedbackKindHwCompletion WpPresentationFeedbackKind = 0x4
 	WpPresentationFeedbackKindZeroCopy     WpPresentationFeedbackKind = 0x8
+	WpPresentationFeedbackKindFixedRate    WpPresentationFeedbackKind = 0x10
+	WpPresentationFeedbackKindVariableRate WpPresentationFeedbackKind = 0x20
 )
 
 // WpPresentationFeedbackHandler handles wp_presentation_feedback requests.

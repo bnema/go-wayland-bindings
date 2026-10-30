@@ -285,7 +285,7 @@ func (o *XdgWmBase) CreatePositioner() (*XdgPositioner, error) {
 	return child, nil
 }
 
-// This creates an xdg_surface for the given surface. An xdg_surface is used as basis to define a role to a given surface, such as xdg_toplevel or xdg_popup. It also manages functionality shared between xdg_surface based surface roles. While xdg_surface itself is not a role, the corresponding surface may only be assigned a role extending xdg_surface, such as xdg_toplevel or xdg_popup. It is illegal to create an xdg_surface for a wl_surface which already has anassigned role and this will result in a role error. See the documentation of xdg_surface for more details about what an xdg_surface is and how it is used.
+// This creates an xdg_surface for the given surface. An xdg_surface is used as basis to define a role to a given surface, such as xdg_toplevel or xdg_popup. It also manages functionality shared between xdg_surface based surface roles. While xdg_surface itself is not a role, the corresponding surface may only be assigned a role extending xdg_surface, such as xdg_toplevel or xdg_popup. It is illegal to create an xdg_surface for a wl_surface which already has an assigned role and this will result in a role error. See the documentation of xdg_surface for more details about what an xdg_surface is and how it is used.
 func (o *XdgWmBase) GetXdgSurface(surface *cross_wl_surface.Surface) (*XdgSurface, error) {
 	var arg1 wl.Object
 	if surface != nil {

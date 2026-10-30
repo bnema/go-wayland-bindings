@@ -15,8 +15,8 @@
     {
       "id": "wayland-protocols",
       "url": "https://gitlab.freedesktop.org/wayland/wayland-protocols.git",
-      "ref": "1.49",
-      "commit": "ee78491a237eaff9389a0ccf8680521d074407d3"
+      "ref": "1.50",
+      "commit": "3eab2dccf4bfdd85c16d312a6c8c8fbc2a6e73a8"
     },
     {
       "id": "wlr-protocols",
@@ -58,7 +58,7 @@
       "xml": "colormanagement.xml",
       "source": "wayland-protocols",
       "path": "staging/color-management/color-management-v1.xml",
-      "sha256": "18a2678e3352c3be3fbeed20005d48852b7235d0d78f08b9c987a0b8e91449f9",
+      "sha256": "afa46ce15b135cce09cb46e0fbe9469914f5f9819cb938662c3cea370bd825ca",
       "license": "MIT",
       "interfaces": [
         {
@@ -455,7 +455,7 @@
       "xml": "fractionalscale.xml",
       "source": "wayland-protocols",
       "path": "staging/fractional-scale/fractional-scale-v1.xml",
-      "sha256": "5941de5d28f427ecdadddc8623a6f6af0a30b0ab4726847236ba7a7652b81316",
+      "sha256": "42945a10487cebe2f16c2f0284f263957d78325748409bfa8bcada385b65f86a",
       "license": "MIT",
       "interfaces": [
         {
@@ -568,7 +568,7 @@
       "xml": "keyboardshortcutsinhibit.xml",
       "source": "wayland-protocols",
       "path": "unstable/keyboard-shortcuts-inhibit/keyboard-shortcuts-inhibit-unstable-v1.xml",
-      "sha256": "9117d9e8ec02e9a3c3c55803b41e1227e76986f555f7c12eeb29f796fa63e69b",
+      "sha256": "9430553bcd72c2ba98e7650efefa8653f863380f1bdddcf30c1e4950389974af",
       "license": "MIT",
       "interfaces": [
         {
@@ -589,7 +589,7 @@
       "xml": "linuxdmabuf.xml",
       "source": "wayland-protocols",
       "path": "stable/linux-dmabuf/linux-dmabuf-v1.xml",
-      "sha256": "2735bb4589cbb364dfcb6a821dd3abbf0c0257956b716b9691718ddfd453df4c",
+      "sha256": "d4feffb8c0a3dbdecfff141f4d65d88d91ff2b022cb343c988b73e3c358d9a76",
       "license": "MIT",
       "interfaces": [
         {
@@ -664,7 +664,7 @@
       "xml": "pointerconstraints.xml",
       "source": "wayland-protocols",
       "path": "unstable/pointer-constraints/pointer-constraints-unstable-v1.xml",
-      "sha256": "f980fac900ba1dcfbbe97f588fc17b893926bd2b57624563653a1bfe4d035948",
+      "sha256": "5c536b05d8d8ac6c57ce04593c2308364d33620de5db917f9dc5bf55bb1245f7",
       "license": "MIT",
       "interfaces": [
         {
@@ -735,16 +735,16 @@
       "xml": "presentationtime.xml",
       "source": "wayland-protocols",
       "path": "stable/presentation-time/presentation-time.xml",
-      "sha256": "dffac93bcb2bb1d8c385e72b8a8c2c0d4d79a336866322f3ba886dce2b27b1e2",
+      "sha256": "0a9e4ee351aada90af9d165a540b86ad9d85f740ce87cf8c26490dd1ae701b5f",
       "license": "MIT",
       "interfaces": [
         {
           "name": "wp_presentation",
-          "version": 2
+          "version": 3
         },
         {
           "name": "wp_presentation_feedback",
-          "version": 2
+          "version": 3
         }
       ],
       "deps": [
@@ -933,7 +933,7 @@
       "xml": "textinput.xml",
       "source": "wayland-protocols",
       "path": "unstable/text-input/text-input-unstable-v3.xml",
-      "sha256": "160815cda13c285a30df1971d8f0a5b3aac07071537df59916d2f748b18e4f59",
+      "sha256": "ea0548232f12abea2160955205b8537368485fa84955b00fddbada44c5fdd404",
       "license": "MIT",
       "interfaces": [
         {
@@ -1439,7 +1439,7 @@
       "xml": "xdgsessionmanagement.xml",
       "source": "wayland-protocols",
       "path": "staging/xdg-session-management/xdg-session-management-v1.xml",
-      "sha256": "3674591ca8e68f76297c535e8edd6783d84b59086c38ebe08ff5ff1f2dec5bae",
+      "sha256": "fc12e79b701eada415795279fb51d189eef628c3a2014f1e9c31e4204b595e65",
       "license": "MIT",
       "interfaces": [
         {
@@ -1464,7 +1464,7 @@
       "xml": "xdgshell.xml",
       "source": "wayland-protocols",
       "path": "stable/xdg-shell/xdg-shell.xml",
-      "sha256": "7ba7f9c8473deee674cb1f154a18abd0bb0cc072604fc055b0c15e459fc4c7df",
+      "sha256": "8cd3980d0783e1f55d12901ac51533204af71487cc4dc69ee00bb7096647d9de",
       "license": "MIT",
       "interfaces": [
         {

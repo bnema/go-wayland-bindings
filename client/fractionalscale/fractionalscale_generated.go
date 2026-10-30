@@ -60,7 +60,7 @@ func (o *WpFractionalScaleManager) Destroy() error {
 	return nil
 }
 
-// Create an add-on object for the the wl_surface to let the compositor request fractional scales. If the given wl_surface already has a wp_fractional_scale_v1 object associated, the fractional_scale_exists protocol error is raised.
+// Create an add-on object for the wl_surface to let the compositor request fractional scales. If the given wl_surface already has a wp_fractional_scale_v1 object associated, the fractional_scale_exists protocol error is raised.
 func (o *WpFractionalScaleManager) GetFractionalScale(surface *cross_wl_surface.Surface) (*WpFractionalScale, error) {
 	var arg1 wl.Object
 	if surface != nil {

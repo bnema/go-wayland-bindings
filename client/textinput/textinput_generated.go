@@ -218,7 +218,7 @@ func (o *TextInputV3) SetSurroundingText(text string, cursor int32, anchor int32
 	return nil
 }
 
-// Tells the compositor why the text surrounding the cursor changed. Whenever the client detects an external change in text, cursor, or anchor posision, it must issue this request to the compositor. This request is intended to give the input method a chance to update the preedit text in an appropriate way, e.g. by removing it when the user starts typing with a keyboard. cause describes the source of the change. The value set with this request is double-buffered. It must be applied and reset to initial at the next zwp_text_input_v3.commit request. The initial value of cause is input_method.
+// Tells the compositor why the text surrounding the cursor changed. Whenever the client detects an external change in text, cursor, or anchor position, it must issue this request to the compositor. This request is intended to give the input method a chance to update the preedit text in an appropriate way, e.g. by removing it when the user starts typing with a keyboard. cause describes the source of the change. The value set with this request is double-buffered. It must be applied and reset to initial at the next zwp_text_input_v3.commit request. The initial value of cause is input_method.
 func (o *TextInputV3) SetTextChangeCause(cause uint32) error {
 	if err := o.Context().RequestArgs(wl.Request{Proxy: o, Opcode: 4, Name: "zwp_text_input_v3.set_text_change_cause"}, wl.ArgUint(cause)); err != nil {
 		return err
