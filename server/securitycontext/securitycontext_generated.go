@@ -25,8 +25,8 @@
 package securitycontext
 
 import (
+	"bnema.dev/purego-libwayland/server"
 	"fmt"
-	"github.com/bnema/purego-libwayland/server"
 )
 
 var WpSecurityContextManagerV1Interface *server.Interface

@@ -27,8 +27,8 @@
 package xdgdialog
 
 import (
+	"bnema.dev/wlturbo/wl"
 	cross_xdg_toplevel "github.com/bnema/go-wayland-bindings/client/xdgshell"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ERROR_ALREADY_USED is the error already_used value.

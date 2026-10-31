@@ -1,7 +1,7 @@
 package wayland
 
 import (
-	"github.com/bnema/purego-libwayland/server"
+	"bnema.dev/purego-libwayland/server"
 	"testing"
 )
 

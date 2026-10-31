@@ -26,10 +26,10 @@
 package extimagecapturesource
 
 import (
+	"bnema.dev/purego-libwayland/server"
 	"fmt"
 	extforeigntoplevellist "github.com/bnema/go-wayland-bindings/server/extforeigntoplevellist"
 	wayland "github.com/bnema/go-wayland-bindings/server/wayland"
-	"github.com/bnema/purego-libwayland/server"
 )
 
 var ExtImageCaptureSourceV1Interface *server.Interface

@@ -1,8 +1,8 @@
-github.com/bnema/purego v0.13.0-bnema.1 h1:fKRdztnvTmRqAjANMoN+utEIH73dvPqVPJh2iZCCAO8=
-github.com/bnema/purego v0.13.0-bnema.1/go.mod h1:xS1iX3noypxnbOUEUAqOvkfnUzgHuu19VtL4+dfUMJM=
-github.com/bnema/purego-libwayland v0.8.0 h1:e82G1nMre4HvnR1Q8TvdnVNITUStSc+hD3eMwkYjxQY=
-github.com/bnema/purego-libwayland v0.8.0/go.mod h1:+2zIEBX+iNlRB27xrm5Z8Dnd+cmqX+1AYvuwguxK2dg=
-github.com/bnema/wlturbo v0.5.0 h1:AUP3IAd4ZXM3ZrJ8zu65lAejKtYMwSoSDE2TS6k3mn4=
-github.com/bnema/wlturbo v0.5.0/go.mod h1:4i1k1wyw7FDWOkh2hg1ZwPfrPRn3+E6WrYg9Qrt74CA=
+bnema.dev/purego v0.13.0-bnema.3 h1:15iXEOkg0WrpUKoLnoD/94qX4gPc+F4T6hTbpUWg81s=
+bnema.dev/purego v0.13.0-bnema.3/go.mod h1:isZX4JISlvO21uwYXw3coKTo8RhwMpLpdro6jLIp++s=
+bnema.dev/purego-libwayland v0.13.0 h1:cTwng89250f6IzMq3Dn+Uy0YTkK67Uc7H1tkNr8FcCw=
+bnema.dev/purego-libwayland v0.13.0/go.mod h1:ffooPnsy1V3pdw01Gu4kh31q5F0fcIiNKD8EefYilWo=
+bnema.dev/wlturbo v0.7.0 h1:UeUgL3KCQwemwwr+QbQ5OH3susvv7UfAK2/N4XKaRtc=
+bnema.dev/wlturbo v0.7.0/go.mod h1:u6jdtuOVOsMWO51WDOFKq0xz4jIq6yPVHV2fayGgP1k=
 golang.org/x/sys v0.48.0 h1:bbX/i/6MgT9BVLM9RT1thmxL04yeTAhbEz4SyadbXoo=
 golang.org/x/sys v0.48.0/go.mod h1:hNLxWAXmnKAxqDtdwIYC4bM9oQPEecfsnNMuSxOs3og=

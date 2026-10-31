@@ -27,8 +27,8 @@
 package xdgsystembell
 
 import (
+	"bnema.dev/wlturbo/wl"
 	cross_wl_surface "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // XdgSystemBellInterface is the protocol interface name.

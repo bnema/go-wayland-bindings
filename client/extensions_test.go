@@ -20,7 +20,7 @@ import (
 	"github.com/bnema/go-wayland-bindings/client/viewporter"
 	"github.com/bnema/go-wayland-bindings/client/wayland"
 	"github.com/bnema/go-wayland-bindings/client/xdgshell"
-	"github.com/bnema/wlturbo"
+	"bnema.dev/wlturbo"
 	"golang.org/x/sys/unix"
 )
 

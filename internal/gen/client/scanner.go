@@ -24,7 +24,7 @@ import (
 
 // TransportImport is the import path generated bindings use for the Wayland
 // transport.
-const TransportImport = "github.com/bnema/wlturbo/wl"
+const TransportImport = "bnema.dev/wlturbo/wl"
 
 // DefaultTool is the generator name written to the "Code generated" header
 // when Scanner.Tool is empty.

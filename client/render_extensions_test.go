@@ -27,7 +27,7 @@ import (
 	"github.com/bnema/go-wayland-bindings/client/tearingcontrol"
 	"github.com/bnema/go-wayland-bindings/client/wayland"
 	"github.com/bnema/go-wayland-bindings/client/xdgactivation"
-	"github.com/bnema/wlturbo"
+	"bnema.dev/wlturbo"
 	"golang.org/x/sys/unix"
 )
 

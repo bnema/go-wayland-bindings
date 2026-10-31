@@ -30,9 +30,9 @@ package xdgtoplevelicon
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_wl_buffer "github.com/bnema/go-wayland-bindings/client/wayland"
 	cross_xdg_toplevel "github.com/bnema/go-wayland-bindings/client/xdgshell"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ERROR_INVALID_BUFFER is the error invalid_buffer value.

@@ -25,10 +25,10 @@
 package xdgtopleveldrag
 
 import (
+	"bnema.dev/purego-libwayland/server"
 	"fmt"
 	wayland "github.com/bnema/go-wayland-bindings/server/wayland"
 	xdgshell "github.com/bnema/go-wayland-bindings/server/xdgshell"
-	"github.com/bnema/purego-libwayland/server"
 )
 
 var ToplevelDragManagerV1Interface *server.Interface

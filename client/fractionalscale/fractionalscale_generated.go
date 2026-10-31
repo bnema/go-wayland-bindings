@@ -29,8 +29,8 @@ package fractionalscale
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_wl_surface "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ERROR_FRACTIONAL_SCALE_EXISTS is the error fractional_scale_exists value.

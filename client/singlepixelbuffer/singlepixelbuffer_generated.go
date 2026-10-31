@@ -27,8 +27,8 @@
 package singlepixelbuffer
 
 import (
+	"bnema.dev/wlturbo/wl"
 	cross_wl_buffer "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // WpSinglePixelBufferManagerInterface is the protocol interface name.

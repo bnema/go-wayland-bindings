@@ -12,8 +12,8 @@ package serverdecoration
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_wl_surface "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ORG_KDE_KWIN_SERVER_DECORATION_MANAGER_MODE_NONE is the mode None value.

@@ -10,7 +10,7 @@ import (
 
 	"github.com/bnema/go-wayland-bindings/client/extsessionlock"
 	"github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo"
+	"bnema.dev/wlturbo"
 )
 
 // These tests use ordinary generated proxies and the production transport on a

@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/bnema/go-wayland-bindings/client/xdgshell"
-	"github.com/bnema/wlturbo"
+	"bnema.dev/wlturbo"
 )
 
 func TestAnnouncedVersionNegotiation(t *testing.T) {

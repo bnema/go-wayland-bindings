@@ -29,8 +29,8 @@ package xdgforeign
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_wl_surface "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ZXDG_EXPORTER_V2_ERROR_INVALID_SURFACE is the error invalid_surface value.

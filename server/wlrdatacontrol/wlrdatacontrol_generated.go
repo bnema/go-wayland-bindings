@@ -28,9 +28,9 @@
 package wlrdatacontrol
 
 import (
+	"bnema.dev/purego-libwayland/server"
 	"fmt"
 	wayland "github.com/bnema/go-wayland-bindings/server/wayland"
-	"github.com/bnema/purego-libwayland/server"
 	"runtime"
 )
 

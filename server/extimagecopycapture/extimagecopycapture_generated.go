@@ -26,10 +26,10 @@
 package extimagecopycapture
 
 import (
+	"bnema.dev/purego-libwayland/server"
 	"fmt"
 	extimagecapturesource "github.com/bnema/go-wayland-bindings/server/extimagecapturesource"
 	wayland "github.com/bnema/go-wayland-bindings/server/wayland"
-	"github.com/bnema/purego-libwayland/server"
 	"runtime"
 )
 

@@ -31,7 +31,7 @@ package drmlease
 import (
 	"sync"
 
-	"github.com/bnema/wlturbo/wl"
+	"bnema.dev/wlturbo/wl"
 )
 
 // ERROR_WRONG_DEVICE is the error wrong_device value.

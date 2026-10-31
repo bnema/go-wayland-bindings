@@ -126,7 +126,7 @@ import (
  "net"
  "os"
  "testing"
- "github.com/bnema/wlturbo"
+ "bnema.dev/wlturbo"
  "github.com/bnema/go-wayland-bindings/client/wayland"
  "golang.org/x/sys/unix"
 )

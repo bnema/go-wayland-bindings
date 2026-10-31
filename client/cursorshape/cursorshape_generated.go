@@ -26,9 +26,9 @@
 package cursorshape
 
 import (
+	"bnema.dev/wlturbo/wl"
 	cross_zwp_tablet_tool_v2 "github.com/bnema/go-wayland-bindings/client/tablet"
 	cross_wl_pointer "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // SHAPE_DEFAULT is the shape default value.

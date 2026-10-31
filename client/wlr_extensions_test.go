@@ -22,7 +22,7 @@ import (
 	outputpower "github.com/bnema/go-wayland-bindings/client/wlroutputpowermanagement"
 	screencopy "github.com/bnema/go-wayland-bindings/client/wlrscreencopy"
 	"github.com/bnema/go-wayland-bindings/client/xdgshell"
-	"github.com/bnema/wlturbo"
+	"bnema.dev/wlturbo"
 	"golang.org/x/sys/unix"
 )
 

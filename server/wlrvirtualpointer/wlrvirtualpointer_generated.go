@@ -25,9 +25,9 @@
 package wlrvirtualpointer
 
 import (
+	"bnema.dev/purego-libwayland/server"
 	"fmt"
 	wayland "github.com/bnema/go-wayland-bindings/server/wayland"
-	"github.com/bnema/purego-libwayland/server"
 )
 
 var ZwlrVirtualPointerV1Interface *server.Interface

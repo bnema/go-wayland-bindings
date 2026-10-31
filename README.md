@@ -18,11 +18,11 @@ go get github.com/bnema/go-wayland-bindings@latest
 
 ## Usage
 
-Client (the runtime lives in `github.com/bnema/wlturbo`):
+Client (the runtime lives in `bnema.dev/wlturbo`):
 
 ```go
 import (
-	"github.com/bnema/wlturbo/wl"
+	"bnema.dev/wlturbo/wl"
 
 	"github.com/bnema/go-wayland-bindings/client/wayland"
 )
@@ -33,11 +33,11 @@ compositor := wayland.NewCompositor(display.Context())
 err = display.Registry().Bind(name, wayland.CompositorInterface, 1, compositor)
 ```
 
-Server (the runtime lives in `github.com/bnema/purego-libwayland/server`):
+Server (the runtime lives in `bnema.dev/purego-libwayland/server`):
 
 ```go
 import (
-	"github.com/bnema/purego-libwayland/server"
+	"bnema.dev/purego-libwayland/server"
 
 	"github.com/bnema/go-wayland-bindings/server/wayland"
 )

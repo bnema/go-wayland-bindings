@@ -31,8 +31,8 @@ package linuxexplicitsynchronization
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_wl_surface "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ERROR_SYNCHRONIZATION_EXISTS is the error synchronization_exists value.

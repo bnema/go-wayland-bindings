@@ -13,7 +13,7 @@ import (
 	"github.com/bnema/go-wayland-bindings/client/fractionalscale"
 	"github.com/bnema/go-wayland-bindings/client/viewporter"
 	"github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo"
+	"bnema.dev/wlturbo"
 	"golang.org/x/sys/unix"
 )
 

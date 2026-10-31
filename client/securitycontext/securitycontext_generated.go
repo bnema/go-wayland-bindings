@@ -27,7 +27,7 @@
 package securitycontext
 
 import (
-	"github.com/bnema/wlturbo/wl"
+	"bnema.dev/wlturbo/wl"
 )
 
 // ERROR_INVALID_LISTEN_FD is the error invalid_listen_fd value.

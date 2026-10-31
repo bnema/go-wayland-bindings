@@ -33,7 +33,7 @@ package extworkspace
 import (
 	"sync"
 
-	"github.com/bnema/wlturbo/wl"
+	"bnema.dev/wlturbo/wl"
 )
 
 // GROUP_CAPABILITIES_CREATE_WORKSPACE is the group_capabilities create_workspace value.

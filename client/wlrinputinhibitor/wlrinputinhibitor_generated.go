@@ -29,7 +29,7 @@
 package wlrinputinhibitor
 
 import (
-	"github.com/bnema/wlturbo/wl"
+	"bnema.dev/wlturbo/wl"
 )
 
 // ERROR_ALREADY_INHIBITED is the error already_inhibited value.

@@ -31,9 +31,9 @@ package fullscreenshell
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_wl_output "github.com/bnema/go-wayland-bindings/client/wayland"
 	cross_wl_surface "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // CAPABILITY_ARBITRARY_MODES is the capability arbitrary_modes value.

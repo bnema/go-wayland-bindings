@@ -48,7 +48,7 @@ import (
 	"github.com/bnema/go-wayland-bindings/client/xdgdecoration"
 	"github.com/bnema/go-wayland-bindings/client/xdgoutput"
 	"github.com/bnema/go-wayland-bindings/client/xdgshell"
-	"github.com/bnema/wlturbo"
+	"bnema.dev/wlturbo"
 	"golang.org/x/sys/unix"
 )
 

@@ -29,7 +29,7 @@ package exttransientseat
 import (
 	"sync"
 
-	"github.com/bnema/wlturbo/wl"
+	"bnema.dev/wlturbo/wl"
 )
 
 // ExtTransientSeatManagerInterface is the protocol interface name.
