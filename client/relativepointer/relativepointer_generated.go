@@ -30,8 +30,8 @@ package relativepointer
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_wl_pointer "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // RelativePointerManagerInterface is the protocol interface name.

@@ -31,8 +31,8 @@ package pointergestures
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_wl_pointer "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // PointerGesturesInterface is the protocol interface name.

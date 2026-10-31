@@ -31,10 +31,10 @@ package wlrforeigntoplevelmanagement
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_wl_output "github.com/bnema/go-wayland-bindings/client/wayland"
 	cross_wl_seat "github.com/bnema/go-wayland-bindings/client/wayland"
 	cross_wl_surface "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // STATE_MAXIMIZED is the state maximized value.

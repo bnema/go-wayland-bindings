@@ -29,8 +29,8 @@ package xdgoutput
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_wl_output "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ZxdgOutputManagerInterface is the protocol interface name.

@@ -40,7 +40,7 @@ func rootRequirement(t *testing.T, module string) string {
 func writeTempModule(t *testing.T, dir, module string, selfReplace bool) {
 	t.Helper()
 	mod := "module " + module + "\n\ngo 1.27\n\n" +
-		"require (\n\tgithub.com/bnema/wlturbo " + rootRequirement(t, "github.com/bnema/wlturbo") +
+		"require (\n\tbnema.dev/wlturbo " + rootRequirement(t, "bnema.dev/wlturbo") +
 		"\n\tgolang.org/x/sys " + rootRequirement(t, "golang.org/x/sys") + "\n)\n"
 	if selfReplace {
 		root, err := filepath.Abs(repoRoot)

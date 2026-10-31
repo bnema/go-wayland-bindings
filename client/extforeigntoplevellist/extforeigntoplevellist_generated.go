@@ -34,7 +34,7 @@ package extforeigntoplevellist
 import (
 	"sync"
 
-	"github.com/bnema/wlturbo/wl"
+	"bnema.dev/wlturbo/wl"
 )
 
 // ExtForeignToplevelListInterface is the protocol interface name.

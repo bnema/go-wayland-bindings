@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/bnema/go-wayland-bindings/server/wayland"
-	"github.com/bnema/purego-libwayland/server"
-	"github.com/bnema/wlturbo"
+	"bnema.dev/purego-libwayland/server"
+	"bnema.dev/wlturbo"
 	"golang.org/x/sys/unix"
 )
 

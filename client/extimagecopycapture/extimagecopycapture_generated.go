@@ -30,10 +30,10 @@ package extimagecopycapture
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_ext_image_capture_source_v1 "github.com/bnema/go-wayland-bindings/client/extimagecapturesource"
 	cross_wl_buffer "github.com/bnema/go-wayland-bindings/client/wayland"
 	cross_wl_pointer "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ERROR_INVALID_OPTION is the error invalid_option value.

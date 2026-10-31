@@ -33,7 +33,7 @@ package wayland
 import (
 	"sync"
 
-	"github.com/bnema/wlturbo/wl"
+	"bnema.dev/wlturbo/wl"
 )
 
 // WL_SHM_POOL_ERROR_INVALID_FORMAT is the error invalid_format value.

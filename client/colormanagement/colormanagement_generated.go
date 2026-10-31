@@ -34,9 +34,9 @@ package colormanagement
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_wl_output "github.com/bnema/go-wayland-bindings/client/wayland"
 	cross_wl_surface "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // WP_COLOR_MANAGER_V1_ERROR_UNSUPPORTED_FEATURE is the error unsupported_feature value.

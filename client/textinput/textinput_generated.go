@@ -34,8 +34,8 @@ package textinput
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_wl_seat "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // CHANGE_CAUSE_INPUT_METHOD is the change_cause input_method value.

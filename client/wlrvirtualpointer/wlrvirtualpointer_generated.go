@@ -27,9 +27,9 @@
 package wlrvirtualpointer
 
 import (
+	"bnema.dev/wlturbo/wl"
 	cross_wl_output "github.com/bnema/go-wayland-bindings/client/wayland"
 	cross_wl_seat "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ERROR_INVALID_AXIS is the error invalid_axis value.

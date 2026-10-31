@@ -31,8 +31,8 @@ package xdgsessionmanagement
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_xdg_toplevel "github.com/bnema/go-wayland-bindings/client/xdgshell"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ERROR_IN_USE is the error in_use value.

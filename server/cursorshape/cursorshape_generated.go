@@ -24,10 +24,10 @@
 package cursorshape
 
 import (
+	"bnema.dev/purego-libwayland/server"
 	"fmt"
 	tablet "github.com/bnema/go-wayland-bindings/server/tablet"
 	wayland "github.com/bnema/go-wayland-bindings/server/wayland"
-	"github.com/bnema/purego-libwayland/server"
 )
 
 var WpCursorShapeManagerV1Interface *server.Interface

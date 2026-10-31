@@ -30,10 +30,10 @@ package pointerconstraints
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_wl_pointer "github.com/bnema/go-wayland-bindings/client/wayland"
 	cross_wl_region "github.com/bnema/go-wayland-bindings/client/wayland"
 	cross_wl_surface "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ERROR_ALREADY_CONSTRAINED is the error already_constrained value.

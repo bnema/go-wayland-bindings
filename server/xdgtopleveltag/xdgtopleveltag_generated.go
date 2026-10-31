@@ -25,9 +25,9 @@
 package xdgtopleveltag
 
 import (
+	"bnema.dev/purego-libwayland/server"
 	"fmt"
 	xdgshell "github.com/bnema/go-wayland-bindings/server/xdgshell"
-	"github.com/bnema/purego-libwayland/server"
 )
 
 var ToplevelTagManagerV1Interface *server.Interface

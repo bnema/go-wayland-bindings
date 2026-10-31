@@ -27,8 +27,8 @@
 package tearingcontrol
 
 import (
+	"bnema.dev/wlturbo/wl"
 	cross_wl_surface "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ERROR_TEARING_CONTROL_EXISTS is the error tearing_control_exists value.

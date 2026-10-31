@@ -27,8 +27,8 @@
 package fifo
 
 import (
+	"bnema.dev/wlturbo/wl"
 	cross_wl_surface "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ERROR_ALREADY_EXISTS is the error already_exists value.

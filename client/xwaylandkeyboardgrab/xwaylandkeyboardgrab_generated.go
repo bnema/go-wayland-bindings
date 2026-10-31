@@ -27,9 +27,9 @@
 package xwaylandkeyboardgrab
 
 import (
+	"bnema.dev/wlturbo/wl"
 	cross_wl_seat "github.com/bnema/go-wayland-bindings/client/wayland"
 	cross_wl_surface "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // XwaylandKeyboardGrabManagerInterface is the protocol interface name.

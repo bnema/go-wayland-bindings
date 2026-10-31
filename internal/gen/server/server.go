@@ -1,5 +1,5 @@
 // Package server generates Go server-side bindings (for
-// github.com/bnema/purego-libwayland/server) from Wayland protocol XML.
+// bnema.dev/purego-libwayland/server) from Wayland protocol XML.
 package server
 
 import (
@@ -214,7 +214,7 @@ func (g *gen) generate(pr *spec.Protocol, pkg, tool string, opts Options) ([]byt
 	} else if spdx != "" {
 		g.p("\n")
 	}
-	g.p("package %s\nimport (\"github.com/bnema/purego-libwayland/server\"\n", pkg)
+	g.p("package %s\nimport (\"bnema.dev/purego-libwayland/server\"\n", pkg)
 	pin := false
 	for _, it := range pr.Interfaces {
 		for _, m := range it.Events {

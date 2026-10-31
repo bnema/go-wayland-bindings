@@ -30,8 +30,8 @@
 package virtualkeyboard
 
 import (
+	"bnema.dev/wlturbo/wl"
 	cross_wl_seat "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ERROR_NO_KEYMAP is the error no_keymap value.

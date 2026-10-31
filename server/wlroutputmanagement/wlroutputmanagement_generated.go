@@ -27,8 +27,8 @@
 package wlroutputmanagement
 
 import (
+	"bnema.dev/purego-libwayland/server"
 	"fmt"
-	"github.com/bnema/purego-libwayland/server"
 	"runtime"
 )
 

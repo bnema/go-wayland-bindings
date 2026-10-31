@@ -28,9 +28,9 @@
 package extimagecapturesource
 
 import (
+	"bnema.dev/wlturbo/wl"
 	cross_ext_foreign_toplevel_handle_v1 "github.com/bnema/go-wayland-bindings/client/extforeigntoplevellist"
 	cross_wl_output "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ExtImageCaptureSourceInterface is the protocol interface name.

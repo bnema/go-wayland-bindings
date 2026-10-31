@@ -25,9 +25,9 @@
 package xwaylandshell
 
 import (
+	"bnema.dev/purego-libwayland/server"
 	"fmt"
 	wayland "github.com/bnema/go-wayland-bindings/server/wayland"
-	"github.com/bnema/purego-libwayland/server"
 )
 
 var XwaylandShellV1Interface *server.Interface

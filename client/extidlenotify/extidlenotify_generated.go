@@ -30,8 +30,8 @@ package extidlenotify
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_wl_seat "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ExtIdleNotifierInterface is the protocol interface name.

@@ -27,9 +27,9 @@
 package xdgtopleveldrag
 
 import (
+	"bnema.dev/wlturbo/wl"
 	cross_wl_data_source "github.com/bnema/go-wayland-bindings/client/wayland"
 	cross_xdg_toplevel "github.com/bnema/go-wayland-bindings/client/xdgshell"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ERROR_INVALID_SOURCE is the error invalid_source value.

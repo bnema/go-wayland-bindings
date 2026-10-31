@@ -27,8 +27,8 @@
 package committiming
 
 import (
+	"bnema.dev/wlturbo/wl"
 	cross_wl_surface "github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ERROR_COMMIT_TIMER_EXISTS is the error commit_timer_exists value.

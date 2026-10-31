@@ -31,7 +31,7 @@ package wlroutputmanagement
 import (
 	"sync"
 
-	"github.com/bnema/wlturbo/wl"
+	"bnema.dev/wlturbo/wl"
 )
 
 // ADAPTIVE_SYNC_STATE_DISABLED is the adaptive_sync_state disabled value.

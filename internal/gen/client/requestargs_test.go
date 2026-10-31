@@ -82,7 +82,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bnema/wlturbo"
+	"bnema.dev/wlturbo"
 	"golang.org/x/sys/unix"
 )
 

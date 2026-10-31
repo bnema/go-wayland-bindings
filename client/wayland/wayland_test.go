@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/bnema/go-wayland-bindings/client/wayland"
-	"github.com/bnema/wlturbo"
+	"bnema.dev/wlturbo"
 	"golang.org/x/sys/unix"
 )
 

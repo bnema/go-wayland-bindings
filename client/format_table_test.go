@@ -5,7 +5,7 @@ package client_test
 import (
 	"errors"
 	"github.com/bnema/go-wayland-bindings/client/linuxdmabuf"
-	"github.com/bnema/wlturbo"
+	"bnema.dev/wlturbo"
 	"golang.org/x/sys/unix"
 	"io"
 	"os"

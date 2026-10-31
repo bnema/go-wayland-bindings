@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/bnema/wlturbo/wl"
+	"bnema.dev/wlturbo/wl"
 	"golang.org/x/sys/unix"
 )
 

@@ -27,8 +27,8 @@
 package xdgtopleveltag
 
 import (
+	"bnema.dev/wlturbo/wl"
 	cross_xdg_toplevel "github.com/bnema/go-wayland-bindings/client/xdgshell"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // XdgToplevelTagManagerInterface is the protocol interface name.

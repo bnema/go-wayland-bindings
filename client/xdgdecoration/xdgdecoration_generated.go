@@ -29,8 +29,8 @@ package xdgdecoration
 import (
 	"sync"
 
+	"bnema.dev/wlturbo/wl"
 	cross_xdg_toplevel "github.com/bnema/go-wayland-bindings/client/xdgshell"
-	"github.com/bnema/wlturbo/wl"
 )
 
 // ERROR_UNCONFIGURED_BUFFER is the error unconfigured_buffer value.
